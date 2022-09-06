@@ -18,7 +18,7 @@
   <entry>
     <title></title>
     <url>/2022/09/06/springsecurity%E9%89%B4%E6%9D%83/</url>
-    <content><![CDATA[<h1 id="教学目标"><a class="anchor" href="#教学目标">#</a> 教学目标</h1>
+    <content><![CDATA[<h1 id="安全框架"><a class="anchor" href="#安全框架">#</a> 安全框架</h1>
 <ul>
 <li>
 <p>SpringSecurity 鉴权 - [重点]</p>
@@ -30,7 +30,7 @@
 <p>SpringSecurity 注销成功的处理</p>
 </li>
 </ul>
-<h1 id="1springsecurity-鉴权-重点"><a class="anchor" href="#1springsecurity-鉴权-重点">#</a> 1.SpringSecurity 鉴权 - [重点]</h1>
+<h1 id="1springsecurity-鉴权"><a class="anchor" href="#1springsecurity-鉴权">#</a> 1.SpringSecurity 鉴权</h1>
 <ul>
 <li>RBAC 基于角色访问控制</li>
 </ul>
