@@ -1,686 +1,471 @@
+
+
+
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="baidu-site-verification" content="L6Lm9d5Crl"/>
-  
-  
-  
-  
-  <title>Legend</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="教学目标 SpringSecurity 鉴权 - [重点]  SpringSecurity整合JWT - [重点]  SpringSecurity注销成功的处理   1.SpringSecurity 鉴权 - [重点] RBAC 基于角色访问控制  123456789101112131415161718192021222324Role-Based Access Control组成部分:RBAC模型">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Legend">
-<meta property="og:url" content="http://example.com/2022/09/06/springsecurity%E9%89%B4%E6%9D%83/index.html">
-<meta property="og:site_name" content="Legend">
-<meta property="og:description" content="教学目标 SpringSecurity 鉴权 - [重点]  SpringSecurity整合JWT - [重点]  SpringSecurity注销成功的处理   1.SpringSecurity 鉴权 - [重点] RBAC 基于角色访问控制  123456789101112131415161718192021222324Role-Based Access Control组成部分:RBAC模型">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://woniumd.oss-cn-hangzhou.aliyuncs.com/java/gaopeng2/20220706143701.png">
-<meta property="og:image" content="https://woniumd.oss-cn-hangzhou.aliyuncs.com/java/gaopeng2/20220706154522.png">
-<meta property="article:published_time" content="2022-09-06T04:49:10.401Z">
-<meta property="article:modified_time" content="2022-07-06T23:40:12.758Z">
-<meta property="article:author" content="Legend">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://woniumd.oss-cn-hangzhou.aliyuncs.com/java/gaopeng2/20220706143701.png">
-  
-    <link rel="alternative" href="/atom.xml" title="Legend" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/img/favicon.png">
-  
-  
-  
-<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="Legend" href="http://example.com/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="Legend" href="http://example.com/atom.xml" />
+<link rel="alternate" type="application/json" title="Legend" href="http://example.com/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
 
   
-  
-<link rel="stylesheet" href="/css/style.css">
 
-  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  
-  
-      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  
-  <!-- 加载特效 -->
-    <script src="/js/pace.js"></script>
-    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
-  <script>
-      var yiliaConfig = {
-          fancybox: true,
-          animate: true,
-          isHome: false,
-          isPost: true,
-          isArchive: false,
-          isTag: false,
-          isCategory: false,
-          open_in_new: false
-      }
-  </script>
+<link rel="canonical" href="http://example.com/2022/09/06/springsecurity%E9%89%B4%E6%9D%83/">
+
+
+
+  <title>
+ |
+Yume Shoka = Legend = 小菜鸡</title>
 <meta name="generator" content="Hexo 6.2.0"></head>
-<body>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
   <div id="container">
-    <div class="left-col">
-    <div class="overlay"></div>
-<div class="intrude-less">
-    <header id="header" class="inner">
-        
-<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
-
-        <a href="/" class="profilepic">
-            
-            <img lazy-src="/img/avatar.png" class="js-avatar">
-            
-        </a>
-        <hgroup>
-          <h1 class="header-author"><a href="/"></a></h1>
-        </hgroup>
-        
-        
-            <form>
-                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="搜索一下" autocomplete="off">
-            </form>
-            <div id="local-search-result"></div>
-        
-        
-            <script type="text/javascript">
-                (function() {
-                    'use strict';
-                    function getMatchData(keyword, data) {
-                        var matchData = [];
-                        for(var i =0;i<data.length;i++){
-                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
-                                matchData.push(data[i])
-                        }
-                        return matchData;
-                    }
-                    var $input = $('#local-search-input');
-                    var $resultContent = $('#local-search-result');
-                    $input.keyup(function(){
-                        $.ajax({
-                            url: '/search.json',
-                            dataType: "json",
-                            success: function( json ) {
-                                var str='<ul class=\"search-result-list\">';                
-                                var keyword = $input.val().trim().toLowerCase();
-                                $resultContent.innerHTML = "";
-                                if ($input.val().trim().length <= 0) {
-                                    $resultContent.empty();
-                                    $('#switch-area').show();
-                                    return;
-                                }
-                                var results = getMatchData(keyword, json);
-                                if(results.length === 0){
-                                    $resultContent.empty();
-                                    $('#switch-area').show();
-                                    return;
-                                } 
-                                for(var i =0; i<results.length; i++){
-                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
-                                }
-                                str += "</ul>";
-                                $resultContent.empty();
-                                $resultContent.append(str);
-                                $('#switch-area').hide();
-                            }
-                        });
-                    });
-                })();
-            </script>
-        
-        
-            <div id="switch-btn" class="switch-btn">
-                <div class="icon">
-                    <div class="icon-ctn">
-                        <div class="icon-wrap icon-house" data-idx="0">
-                            <div class="birdhouse"></div>
-                            <div class="birdhouse_holes"></div>
-                        </div>
-                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
-                            <div class="ribbon"></div>
-                        </div>
-                        
-                        <div class="icon-wrap icon-link hide" data-idx="2">
-                            <div class="loopback_l"></div>
-                            <div class="loopback_r"></div>
-                        </div>
-                        
-                        
-                        <div class="icon-wrap icon-me hide" data-idx="3">
-                            <div class="user"></div>
-                            <div class="shoulder"></div>
-                        </div>
-                        
-                    </div>
-                </div>
-                <div class="tips-box hide">
-                    <div class="tips-arrow"></div>
-                    <ul class="tips-inner">
-                        <li>菜单</li>
-                        <li>标签</li>
-                        
-                        <li>友情链接</li>
-                        
-                        
-                        <li>关于我</li>
-                        
-                    </ul>
-                </div>
-            </div>
-        
-        <div id="switch-area" class="switch-area">
-            <div class="switch-wrap">
-                <section class="switch-part switch-part1">
-                    <nav class="header-menu">
-                        <ul>
-                        
-                            <li><a  href="/archives/">所有文章</a></li>
-                        
-                            <li><a  href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">java基础</a></li>
-                        
-                            <li><a  href="/categories/digital">玩转数码</a></li>
-                        
-                            <li><a  href="/categories/algorithm">算法学习</a></li>
-                        
-                            <li><a  href="/about/">关于我</a></li>
-                        
-                        </ul>
-                    </nav>
-                    <nav class="header-nav">
-                        <ul class="social">
-                            
-                                <a class="fl github"  target="_blank" href="/xxxxx" title="github">github</a>
-                            
-                                <a class="fl weibo"  target="_blank" href="/xxxxxxxx" title="weibo">weibo</a>
-                            
-                                <a class="fl rss"  target="_blank" href="/atom.xml" title="rss">rss</a>
-                            
-                        </ul>
-                    </nav>
-                </section>
-                
-                <section class="switch-part switch-part2">
-                    <div class="widget tagcloud" id="js-tagcloud">
-                        
-                    </div>
-                </section>
-                
-                
-                <section class="switch-part switch-part3">
-                    <div id="js-friends">
-                    
-                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://blog.csdn.net/baidu_21483933">csdn</a>
-                    
-                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://segmentfault.com/blog/maocg_web">segmentfault</a>
-                    
-                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.jianshu.com/users/eb37ef89c746/latest_articles">简书</a>
-                    
-                    </div>
-                </section>
-                
-                
-                
-                <section class="switch-part switch-part4">
-                
-                    <div id="js-aboutme">这个人太懒了,什么都没有留下</div>
-                </section>
-                
-            </div>
-        </div>
-    </header>
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="Created: 2022-09-06 12:49:10">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">Posted on</span>
+    <time itemprop="dateCreated datePublished" datetime="2022-09-06T12:49:10+08:00">2022-09-06</time>
+  </span>
 </div>
 
-    </div>
-    <div class="mid-col">
-      <nav id="mobile-nav">
-      <div class="overlay">
-          <div class="slider-trigger"></div>
-          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
-      </div>
-    <div class="intrude-less">
-        <header id="header" class="inner">
-            <a href="/" class="profilepic">
-                
-                    <img lazy-src="/img/avatar.png" class="js-avatar">
-                
-            </a>
-            <hgroup>
-              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
-            </hgroup>
-            
-            <nav class="header-menu">
-                <ul>
-                
-                    <li><a href="/archives/">所有文章</a></li>
-                
-                    <li><a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">java基础</a></li>
-                
-                    <li><a href="/categories/digital">玩转数码</a></li>
-                
-                    <li><a href="/categories/algorithm">算法学习</a></li>
-                
-                    <li><a href="/about/">关于我</a></li>
-                
-                <div class="clearfix"></div>
-                </ul>
-            </nav>
-            <nav class="header-nav">
-                <div class="social">
-                    
-                        <a class="github" target="_blank" href="/xxxxx" title="github">github</a>
-                    
-                        <a class="weibo" target="_blank" href="/xxxxxxxx" title="weibo">weibo</a>
-                    
-                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
-                    
-                </div>
-            </nav>
-        </header>
-    </div>
-</nav>
-      <div class="body-wrap"><article id="post-springsecurity鉴权" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a  href="/2022/09/06/springsecurity%E9%89%B4%E6%9D%83/" class="article-date">
-      <time datetime="2022-09-06T04:49:10.401Z" itemprop="datePublished">2022-09-06</time>
-</a>
 
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="Toggle navigation bar">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
     </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">Yume Shoka</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipev1x5e4j20zk0m8b29.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipetfk5zwj20zk0m8e81.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipeubcbajj20zk0m8h1h.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicliierfjj20zk0m8npd.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclflwv2aj20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipevarprfj20zk0m8npd.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
           
-        <h1 id="教学目标"><a href="#教学目标" class="headerlink" title="教学目标"></a>教学目标</h1><ul>
-<li><p>SpringSecurity 鉴权 - [重点]</p>
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">Home</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
+  <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/06/springsecurity%E9%89%B4%E6%9D%83/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="Legend">
+    <meta itemprop="description" content="小菜鸡, 思念之人所在之处,便是我的归宿">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Legend">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h1 id="教学目标"><a class="anchor" href="#教学目标">#</a> 教学目标</h1>
+<ul>
+<li>
+<p>SpringSecurity 鉴权 - [重点]</p>
 </li>
-<li><p>SpringSecurity整合JWT - [重点]</p>
+<li>
+<p>SpringSecurity 整合 JWT - [重点]</p>
 </li>
-<li><p>SpringSecurity注销成功的处理</p>
+<li>
+<p>SpringSecurity 注销成功的处理</p>
 </li>
 </ul>
-<h1 id="1-SpringSecurity-鉴权-重点"><a href="#1-SpringSecurity-鉴权-重点" class="headerlink" title="1.SpringSecurity 鉴权 - [重点]"></a>1.SpringSecurity 鉴权 - [重点]</h1><ul>
+<h1 id="1springsecurity-鉴权-重点"><a class="anchor" href="#1springsecurity-鉴权-重点">#</a> 1.SpringSecurity 鉴权 - [重点]</h1>
+<ul>
 <li>RBAC 基于角色访问控制</li>
 </ul>
-<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Role-Based Access Control</span><br><span class="line"></span><br><span class="line">组成部分:</span><br><span class="line"></span><br><span class="line">RBAC模型里面，有3个基础组成部分，分别是：用户user、角色role 和 权限permssion</span><br><span class="line">User（用户）：每个用户都有唯一的UID识别，并被授予不同的角色</span><br><span class="line">Role（角色）：不同角色具有不同的权限</span><br><span class="line">Permission（权限）：访问权限</span><br><span class="line">用户-角色映射：用户和角色之间的映射关系</span><br><span class="line">角色-权限映射：角色和权限之间的映射</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-- 基于资源(权限)  细粒  用户-权限</span><br><span class="line">SELECT p.* FROM rbac_perms p INNER JOIN rbac_user_perm up ON p.id=up.permid</span><br><span class="line">                             INNER JOIN rbac_user u ON u.id=up.userid</span><br><span class="line">                             WHERE u.username=&#x27;zhangsan&#x27;</span><br><span class="line"></span><br><span class="line">-- 基于角色   粗粒度  用户-角色-权限</span><br><span class="line"></span><br><span class="line">SELECT p.* FROM rbac_perms p INNER JOIN rbac_role_perm rp ON p.id=rp.permid</span><br><span class="line">                           INNER JOIN rbac_user_role ur ON rp.roleid=ur.roleid</span><br><span class="line">                           INNER JOIN rbac_user u ON  u.id=ur.userid</span><br><span class="line">                           WHERE u.username=&#x27;zhangsan&#x27;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>配置类注解</p>
-<p>step1:在配置类上添加@EnableWebSecurity </p>
-<p>step2:配置类上添加@EnableGlobalMethodSecurity指定scecurity鉴权时使用的是哪一套注解</p>
+<figure class="highlight txt"><figcaption data-lang="txt"></figcaption><table><tr><td data-num="1"></td><td><pre>Role-Based Access Control</pre></td></tr><tr><td data-num="2"></td><td><pre></pre></td></tr><tr><td data-num="3"></td><td><pre>组成部分:</pre></td></tr><tr><td data-num="4"></td><td><pre></pre></td></tr><tr><td data-num="5"></td><td><pre>RBAC模型里面，有3个基础组成部分，分别是：用户user、角色role 和 权限permssion</pre></td></tr><tr><td data-num="6"></td><td><pre>User（用户）：每个用户都有唯一的UID识别，并被授予不同的角色</pre></td></tr><tr><td data-num="7"></td><td><pre>Role（角色）：不同角色具有不同的权限</pre></td></tr><tr><td data-num="8"></td><td><pre>Permission（权限）：访问权限</pre></td></tr><tr><td data-num="9"></td><td><pre>用户-角色映射：用户和角色之间的映射关系</pre></td></tr><tr><td data-num="10"></td><td><pre>角色-权限映射：角色和权限之间的映射</pre></td></tr><tr><td data-num="11"></td><td><pre></pre></td></tr><tr><td data-num="12"></td><td><pre></pre></td></tr><tr><td data-num="13"></td><td><pre></pre></td></tr><tr><td data-num="14"></td><td><pre>-- 基于资源(权限)  细粒  用户-权限</pre></td></tr><tr><td data-num="15"></td><td><pre>SELECT p.* FROM rbac_perms p INNER JOIN rbac_user_perm up ON p.id=up.permid</pre></td></tr><tr><td data-num="16"></td><td><pre>                             INNER JOIN rbac_user u ON u.id=up.userid</pre></td></tr><tr><td data-num="17"></td><td><pre>                             WHERE u.username='zhangsan'</pre></td></tr><tr><td data-num="18"></td><td><pre></pre></td></tr><tr><td data-num="19"></td><td><pre>-- 基于角色   粗粒度  用户-角色-权限</pre></td></tr><tr><td data-num="20"></td><td><pre></pre></td></tr><tr><td data-num="21"></td><td><pre>SELECT p.* FROM rbac_perms p INNER JOIN rbac_role_perm rp ON p.id=rp.permid</pre></td></tr><tr><td data-num="22"></td><td><pre>                           INNER JOIN rbac_user_role ur ON rp.roleid=ur.roleid</pre></td></tr><tr><td data-num="23"></td><td><pre>                           INNER JOIN rbac_user u ON  u.id=ur.userid</pre></td></tr><tr><td data-num="24"></td><td><pre>                           WHERE u.username='zhangsan'</pre></td></tr></table></figure><ul>
+<li>
+<p>配置类注解</p>
+<p>step1: 在配置类上添加 @EnableWebSecurity</p>
+<p>step2: 配置类上添加 @EnableGlobalMethodSecurity 指定 scecurity 鉴权时使用的是哪一套注解</p>
 <p>Spring Security 支持三套注解：</p>
 <table>
 <thead>
 <tr>
-<th align="left">jsr250 注解</th>
-<th align="left">@DenyAll、@PermitAll、@RolesAllowed</th>
+<th style="text-align:left">jsr250 注解</th>
+<th style="text-align:left">@DenyAll、@PermitAll、@RolesAllowed</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="left">secured 注解</td>
-<td align="left">@Secured</td>
+<tbody>
+<tr>
+<td style="text-align:left">secured 注解</td>
+<td style="text-align:left">@Secured</td>
 </tr>
 <tr>
-<td align="left"><strong>prePost 注解</strong></td>
-<td align="left">@PreAuthorize、@PostAuthorize</td>
+<td style="text-align:left"><strong>prePost 注解</strong></td>
+<td style="text-align:left">@PreAuthorize、@PostAuthorize</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 </li>
 </ul>
 <p><strong>实现步骤:</strong></p>
 <p>(1) 在配置类上添加注解配置</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableWebSecurity</span></span><br><span class="line"><span class="comment">//@EnableGlobalMethodSecurity(jsr250Enabled = true)  //开启Security注解鉴权</span></span><br><span class="line"><span class="comment">//@EnableGlobalMethodSecurity(securedEnabled = true)</span></span><br><span class="line"><span class="meta">@EnableGlobalMethodSecurity(prePostEnabled = true)</span>  <span class="comment">//sprintSecurity自带 可以支持Spring EL表达式</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WebSecurityConfig</span> <span class="keyword">extends</span> <span class="title class_">WebSecurityConfigurerAdapter</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>(2) 在控制器方法上使用注解,表示必须拥有该注解标识的权限才能访问</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserController</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> UserService userService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/userList&quot;)</span></span><br><span class="line">    <span class="comment">//一旦使用此注解,表示请求该方法的用户权限集里必须该权限标识符</span></span><br><span class="line">    <span class="comment">//@RolesAllowed(&quot;ROLE_teacher:list&quot;)  //访问到数据库表中的权限标识符必须以ROLE_开头,注解上的ROLE_可以省略</span></span><br><span class="line">    <span class="comment">//@Secured(&quot;ROLE_teacher:list&quot;) //访问到数据库表中的权限标识符必须以ROLE_开头 注解上的ROLE_不能省略</span></span><br><span class="line">    <span class="comment">//@PreAuthorize(&quot;hasAnyAuthority(&#x27;teacher:list&#x27;)&quot;) //使用hashAnyAuthority EL表达式,可以指定权限标识,不要求使用ROL_ 开头</span></span><br><span class="line">    <span class="comment">//@PreAuthorize(&quot;hasAnyRole(&#x27;ROLE_teacher:list&#x27;)&quot;) //使用hashAnyROLE EL表达式,可以指定权限标识,要求使用ROL_ 开头 ,数据库表中的权限标识也必须以ROLE开头</span></span><br><span class="line">    <span class="meta">@PreAuthorize(&quot;hasRole(&#x27;ROLE_teacher:list&#x27;)&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> List&lt;User&gt; <span class="title function_">queryUserList</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> userService.list(<span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
+<figure class="highlight java"><figcaption data-lang="java"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token annotation punctuation">@EnableWebSecurity</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token comment">//@EnableGlobalMethodSecurity (jsr250Enabled = true)  // 开启 Security 注解鉴权</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token comment">//@EnableGlobalMethodSecurity(securedEnabled = true)</span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token annotation punctuation">@EnableGlobalMethodSecurity</span><span class="token punctuation">(</span>prePostEnabled <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">)</span>  <span class="token comment">//sprintSecurity 自带 可以支持 Spring EL 表达式</span></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WebSecurityConfig</span> <span class="token keyword">extends</span> <span class="token class-name">WebSecurityConfigurerAdapter</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="6"></td><td><pre>    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span></pre></td></tr><tr><td data-num="7"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>(2) 在控制器方法上使用注解，表示必须拥有该注解标识的权限才能访问</p>
+<figure class="highlight java"><figcaption data-lang="java"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token annotation punctuation">@RestController</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserController</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="3"></td><td><pre>    <span class="token annotation punctuation">@Autowired</span></pre></td></tr><tr><td data-num="4"></td><td><pre>    <span class="token keyword">private</span> <span class="token class-name">UserService</span> userService<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="5"></td><td><pre></pre></td></tr><tr><td data-num="6"></td><td><pre>    <span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/userList"</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="7"></td><td><pre>    <span class="token comment">// 一旦使用此注解，表示请求该方法的用户权限集里必须该权限标识符</span></pre></td></tr><tr><td data-num="8"></td><td><pre>    <span class="token comment">//@RolesAllowed ("ROLE_teacher:list")  // 访问到数据库表中的权限标识符必须以 ROLE_开头，注解上的 ROLE_可以省略</span></pre></td></tr><tr><td data-num="9"></td><td><pre>    <span class="token comment">//@Secured ("ROLE_teacher:list") // 访问到数据库表中的权限标识符必须以 ROLE_开头 注解上的 ROLE_不能省略</span></pre></td></tr><tr><td data-num="10"></td><td><pre>    <span class="token comment">//@PreAuthorize ("hasAnyAuthority ('teacher:list')") // 使用 hashAnyAuthority EL 表达式，可以指定权限标识，不要求使用 ROL_ 开头</span></pre></td></tr><tr><td data-num="11"></td><td><pre>    <span class="token comment">//@PreAuthorize ("hasAnyRole ('ROLE_teacher:list')") // 使用 hashAnyROLE EL 表达式，可以指定权限标识，要求使用 ROL_ 开头，数据库表中的权限标识也必须以 ROLE 开头</span></pre></td></tr><tr><td data-num="12"></td><td><pre>    <span class="token annotation punctuation">@PreAuthorize</span><span class="token punctuation">(</span><span class="token string">"hasRole('ROLE_teacher:list')"</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="13"></td><td><pre>    <span class="token keyword">public</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">User</span><span class="token punctuation">></span></span> <span class="token function">queryUserList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="14"></td><td><pre>        <span class="token keyword">return</span> userService<span class="token punctuation">.</span><span class="token function">list</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="15"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="16"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><ul>
 <li>权限不足的处理方案</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 权限不足的处理</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyAccessDeniedHandler</span> <span class="keyword">implements</span> <span class="title class_">AccessDeniedHandler</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">        ResponseResult&lt;Void&gt; result = ResponseResult.error(ResultCode.NO_PERMISSION);</span><br><span class="line">        response.setContentType(<span class="string">&quot;application/json;charset=utf-8&quot;</span>);</span><br><span class="line">        PrintWriter out= response.getWriter();</span><br><span class="line">        out.write(<span class="keyword">new</span> <span class="title class_">ObjectMapper</span>().writeValueAsString(result)); <span class="comment">//将对象转json输出</span></span><br><span class="line">        out.flush();</span><br><span class="line">        out.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>配置类</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">http.authorizeRequests().antMatchers(<span class="string">&quot;/login&quot;</span>, <span class="string">&quot;/login.html&quot;</span>)</span><br><span class="line">    .permitAll().anyRequest().authenticated()</span><br><span class="line">    .and().</span><br><span class="line">    <span class="comment">// 设置登陆页、登录表单form中action的地址，也就是处理认证请求的路径</span></span><br><span class="line">    formLogin().loginPage(<span class="string">&quot;/login.html&quot;</span>).loginProcessingUrl(<span class="string">&quot;/login&quot;</span>)</span><br><span class="line">    <span class="comment">//登录表单form中密码输入框input的name名，不修改的话默认是password</span></span><br><span class="line">    .usernameParameter(<span class="string">&quot;username&quot;</span>).passwordParameter(<span class="string">&quot;password&quot;</span>)</span><br><span class="line">    <span class="comment">//登录认证成功后默认转跳的路径</span></span><br><span class="line">    <span class="comment">//.defaultSuccessUrl(&quot;/home&quot;)</span></span><br><span class="line">    <span class="comment">// 前后端分离认证成功的处理器 -输出json</span></span><br><span class="line">    .successHandler(myAuthenticationSuccessHandler)</span><br><span class="line">    <span class="comment">// 前后端分离认证失败的处理器 -输出json</span></span><br><span class="line">    .failureHandler(myAuthenticationFailureHandler)</span><br><span class="line">    .and()</span><br><span class="line">    <span class="comment">// 前后端分离处理未登录请求</span></span><br><span class="line">    .exceptionHandling().authenticationEntryPoint(myAuthenticationEntryPoint)</span><br><span class="line">    <span class="comment">// 前后端分离处理权限不足的请求</span></span><br><span class="line">    .accessDeniedHandler(myAccessDeniedHandler);</span><br><span class="line"><span class="comment">//.failureUrl(&quot;/error1&quot;).permitAll();</span></span><br><span class="line"><span class="comment">//关闭CSRF跨域攻击防御</span></span><br><span class="line">http.csrf().disable();</span><br></pre></td></tr></table></figure>
-
-<h1 id="2-SpringSecurity整合JWT-重点"><a href="#2-SpringSecurity整合JWT-重点" class="headerlink" title="2.SpringSecurity整合JWT - [重点]"></a>2.SpringSecurity整合JWT - [重点]</h1><h2 id="2-1-JWT概述"><a href="#2-1-JWT概述" class="headerlink" title="2-1 JWT概述"></a>2-1 JWT概述</h2><ul>
+<figure class="highlight java"><figcaption data-lang="java"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">/**</pre></td></tr><tr><td data-num="2"></td><td><pre> * 权限不足的处理</pre></td></tr><tr><td data-num="3"></td><td><pre> */</span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token annotation punctuation">@Component</span></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyAccessDeniedHandler</span> <span class="token keyword">implements</span> <span class="token class-name">AccessDeniedHandler</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="6"></td><td><pre></pre></td></tr><tr><td data-num="7"></td><td><pre>    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">handle</span><span class="token punctuation">(</span><span class="token class-name">HttpServletRequest</span> request<span class="token punctuation">,</span> <span class="token class-name">HttpServletResponse</span> response<span class="token punctuation">,</span> <span class="token class-name">AccessDeniedException</span> e<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">IOException</span><span class="token punctuation">,</span> <span class="token class-name">ServletException</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="8"></td><td><pre>        <span class="token class-name">ResponseResult</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Void</span><span class="token punctuation">></span></span> result <span class="token operator">=</span> <span class="token class-name">ResponseResult</span><span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token class-name">ResultCode</span><span class="token punctuation">.</span><span class="token constant">NO_PERMISSION</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="9"></td><td><pre>        response<span class="token punctuation">.</span><span class="token function">setContentType</span><span class="token punctuation">(</span><span class="token string">"application/json;charset=utf-8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="10"></td><td><pre>        <span class="token class-name">PrintWriter</span> out<span class="token operator">=</span> response<span class="token punctuation">.</span><span class="token function">getWriter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="11"></td><td><pre>        out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ObjectMapper</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">writeValueAsString</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 将对象转 json 输出</span></pre></td></tr><tr><td data-num="12"></td><td><pre>        out<span class="token punctuation">.</span><span class="token function">flush</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="13"></td><td><pre>        out<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="14"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="15"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>配置类</p>
+<figure class="highlight java"><figcaption data-lang="java"></figcaption><table><tr><td data-num="1"></td><td><pre>http<span class="token punctuation">.</span><span class="token function">authorizeRequests</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">antMatchers</span><span class="token punctuation">(</span><span class="token string">"/login"</span><span class="token punctuation">,</span> <span class="token string">"/login.html"</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="2"></td><td><pre>    <span class="token punctuation">.</span><span class="token function">permitAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">anyRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">authenticated</span><span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="3"></td><td><pre>    <span class="token punctuation">.</span><span class="token function">and</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span></pre></td></tr><tr><td data-num="4"></td><td><pre>    <span class="token comment">// 设置登陆页、登录表单 form 中 action 的地址，也就是处理认证请求的路径</span></pre></td></tr><tr><td data-num="5"></td><td><pre>    <span class="token function">formLogin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">loginPage</span><span class="token punctuation">(</span><span class="token string">"/login.html"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">loginProcessingUrl</span><span class="token punctuation">(</span><span class="token string">"/login"</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="6"></td><td><pre>    <span class="token comment">// 登录表单 form 中密码输入框 input 的 name 名，不修改的话默认是 password</span></pre></td></tr><tr><td data-num="7"></td><td><pre>    <span class="token punctuation">.</span><span class="token function">usernameParameter</span><span class="token punctuation">(</span><span class="token string">"username"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">passwordParameter</span><span class="token punctuation">(</span><span class="token string">"password"</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="8"></td><td><pre>    <span class="token comment">// 登录认证成功后默认转跳的路径</span></pre></td></tr><tr><td data-num="9"></td><td><pre>    <span class="token comment">//.defaultSuccessUrl("/home")</span></pre></td></tr><tr><td data-num="10"></td><td><pre>    <span class="token comment">// 前后端分离认证成功的处理器 - 输出 json</span></pre></td></tr><tr><td data-num="11"></td><td><pre>    <span class="token punctuation">.</span><span class="token function">successHandler</span><span class="token punctuation">(</span>myAuthenticationSuccessHandler<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="12"></td><td><pre>    <span class="token comment">// 前后端分离认证失败的处理器 - 输出 json</span></pre></td></tr><tr><td data-num="13"></td><td><pre>    <span class="token punctuation">.</span><span class="token function">failureHandler</span><span class="token punctuation">(</span>myAuthenticationFailureHandler<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="14"></td><td><pre>    <span class="token punctuation">.</span><span class="token function">and</span><span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="15"></td><td><pre>    <span class="token comment">// 前后端分离处理未登录请求</span></pre></td></tr><tr><td data-num="16"></td><td><pre>    <span class="token punctuation">.</span><span class="token function">exceptionHandling</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">authenticationEntryPoint</span><span class="token punctuation">(</span>myAuthenticationEntryPoint<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="17"></td><td><pre>    <span class="token comment">// 前后端分离处理权限不足的请求</span></pre></td></tr><tr><td data-num="18"></td><td><pre>    <span class="token punctuation">.</span><span class="token function">accessDeniedHandler</span><span class="token punctuation">(</span>myAccessDeniedHandler<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="19"></td><td><pre><span class="token comment">//.failureUrl("/error1").permitAll();</span></pre></td></tr><tr><td data-num="20"></td><td><pre><span class="token comment">// 关闭 CSRF 跨域攻击防御</span></pre></td></tr><tr><td data-num="21"></td><td><pre>http<span class="token punctuation">.</span><span class="token function">csrf</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">disable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr></table></figure><h1 id="2springsecurity整合jwt-重点"><a class="anchor" href="#2springsecurity整合jwt-重点">#</a> 2.SpringSecurity 整合 JWT - [重点]</h1>
+<h2 id="2-1-jwt概述"><a class="anchor" href="#2-1-jwt概述">#</a> 2-1 JWT 概述</h2>
+<ul>
 <li>有状态与无状态比较</li>
 </ul>
-<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">有状态服务，即服务端需要记录每次会话的客户端信息，从而识别客户端身份</span><br><span class="line">有状态缺点是什么？</span><br><span class="line">    - 服务端保存大量数据，增加服务端压力</span><br><span class="line">    - 服务端保存用户状态，无法进行水平扩展</span><br><span class="line">    - 客户端请求依赖服务端，多次请求必须访问同一台服务器</span><br><span class="line"></span><br><span class="line">服务器不需要记录客户端的状态信息:</span><br><span class="line">无状态服务器优点:</span><br><span class="line">    - 客户端请求不依赖服务端的信息，任何多次请求不需要必须访问到同一台服务</span><br><span class="line">    - 服务端的集群和状态对客户端透明</span><br><span class="line">    - 服务端可以任意的迁移和伸缩</span><br><span class="line">    - 减小服务端存储压力</span><br></pre></td></tr></table></figure>
-
-<ul>
+<figure class="highlight txt"><figcaption data-lang="txt"></figcaption><table><tr><td data-num="1"></td><td><pre>有状态服务，即服务端需要记录每次会话的客户端信息，从而识别客户端身份</pre></td></tr><tr><td data-num="2"></td><td><pre>有状态缺点是什么？</pre></td></tr><tr><td data-num="3"></td><td><pre>    - 服务端保存大量数据，增加服务端压力</pre></td></tr><tr><td data-num="4"></td><td><pre>    - 服务端保存用户状态，无法进行水平扩展</pre></td></tr><tr><td data-num="5"></td><td><pre>    - 客户端请求依赖服务端，多次请求必须访问同一台服务器</pre></td></tr><tr><td data-num="6"></td><td><pre></pre></td></tr><tr><td data-num="7"></td><td><pre>服务器不需要记录客户端的状态信息:</pre></td></tr><tr><td data-num="8"></td><td><pre>无状态服务器优点:</pre></td></tr><tr><td data-num="9"></td><td><pre>    - 客户端请求不依赖服务端的信息，任何多次请求不需要必须访问到同一台服务</pre></td></tr><tr><td data-num="10"></td><td><pre>    - 服务端的集群和状态对客户端透明</pre></td></tr><tr><td data-num="11"></td><td><pre>    - 服务端可以任意的迁移和伸缩</pre></td></tr><tr><td data-num="12"></td><td><pre>    - 减小服务端存储压力</pre></td></tr></table></figure><ul>
 <li>无状态登录流程</li>
 </ul>
-<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(1) 当客户端第一次请求服务时，服务端对用户进行信息认证（登录）</span><br><span class="line">(2) 认证通过，将用户信息进行加密形成token字符串 [自我描述信息]</span><br><span class="line">(3) 将生成token串发送到客户端</span><br><span class="line">(4) 以后每次请求，客户端都携带认证的token </span><br><span class="line">(5) 服务的对token进行解密，判断是否有效。</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://woniumd.oss-cn-hangzhou.aliyuncs.com/java/gaopeng2/20220706143701.png" alt="image-20220706143701069"></p>
+<figure class="highlight txt"><figcaption data-lang="txt"></figcaption><table><tr><td data-num="1"></td><td><pre>(1) 当客户端第一次请求服务时，服务端对用户进行信息认证（登录）</pre></td></tr><tr><td data-num="2"></td><td><pre>(2) 认证通过，将用户信息进行加密形成token字符串 [自我描述信息]</pre></td></tr><tr><td data-num="3"></td><td><pre>(3) 将生成token串发送到客户端</pre></td></tr><tr><td data-num="4"></td><td><pre>(4) 以后每次请求，客户端都携带认证的token </pre></td></tr><tr><td data-num="5"></td><td><pre>(5) 服务的对token进行解密，判断是否有效。</pre></td></tr></table></figure><p><img data-src="https://woniumd.oss-cn-hangzhou.aliyuncs.com/java/gaopeng2/20220706143701.png" alt="image-20220706143701069" /></p>
 <ul>
-<li>JWT的Token串生成</li>
+<li>JWT 的 Token 串生成</li>
 </ul>
-<p>JWT全称是Json Web Token   是JSON风格轻量级的授权和身份认证规范</p>
-<p>JWT的Token串由三部分组成</p>
+<p>JWT 全称是 Json Web Token   是 JSON 风格轻量级的授权和身份认证规范</p>
+<p>JWT 的 Token 串由三部分组成</p>
 <ul>
-<li>header    头信息 -采用base64编码生成–类型与生成时间</li>
-<li>Payload     载荷 - 用户身份信息,过期时间，签发人  -采用base64编码</li>
-<li>Signature   签名 是整个数据的认证信息- header+Payload+密钥 secret-RSA非对称加密技术生成</li>
+<li>header    头信息 - 采用 base64 编码生成 -- 类型与生成时间</li>
+<li>Payload     载荷 - 用户身份信息，过期时间，签发人  - 采用 base64 编码</li>
+<li>Signature   签名 是整个数据的认证信息 - header+Payload + 密钥 secret-RSA 非对称加密技术生成</li>
 </ul>
-<p>使用JWT实现服务端交互流程:</p>
-<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- 1、用户登录</span><br><span class="line">- 2、服务的认证，通过后根据secret生成token</span><br><span class="line">- 3、将生成的token返回给浏览器</span><br><span class="line">- 4、用户每次请求携带token --header 通过客户端的请求头发送token串</span><br><span class="line">- 5、服务端利用公钥解读jwt签名，判断签名有效后，从Payload中获取用户信息</span><br><span class="line">- 6、处理请求，返回响应结果</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-2-实现生成token"><a href="#2-2-实现生成token" class="headerlink" title="2-2 实现生成token"></a>2-2 实现生成token</h2><ul>
-<li>添加依赖jar</li>
-</ul>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--用于生成JWT依赖--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.jsonwebtoken<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jjwt<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.9.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.auth0<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>java-jwt<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.8.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
+<p>使用 JWT 实现服务端交互流程:</p>
+<figure class="highlight txt"><figcaption data-lang="txt"></figcaption><table><tr><td data-num="1"></td><td><pre>- 1、用户登录</pre></td></tr><tr><td data-num="2"></td><td><pre>- 2、服务的认证，通过后根据secret生成token</pre></td></tr><tr><td data-num="3"></td><td><pre>- 3、将生成的token返回给浏览器</pre></td></tr><tr><td data-num="4"></td><td><pre>- 4、用户每次请求携带token --header 通过客户端的请求头发送token串</pre></td></tr><tr><td data-num="5"></td><td><pre>- 5、服务端利用公钥解读jwt签名，判断签名有效后，从Payload中获取用户信息</pre></td></tr><tr><td data-num="6"></td><td><pre>- 6、处理请求，返回响应结果</pre></td></tr></table></figure><h2 id="2-2-实现生成token"><a class="anchor" href="#2-2-实现生成token">#</a> 2-2 实现生成 token</h2>
 <ul>
-<li>编写工具类JwtTokenUtil并测试</li>
+<li>添加依赖 jar</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JwtTokenUtil</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 过期时间50分钟</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">long</span> <span class="variable">EXPIRE_TIME</span> <span class="operator">=</span> <span class="number">5</span> * <span class="number">60</span> * <span class="number">10000</span>;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * jwt 密钥</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">SECRET</span> <span class="operator">=</span> <span class="string">&quot;woniuxy&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">       生成签名  50分钟过期</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">createSign</span><span class="params">(String userName)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="type">Date</span> <span class="variable">date</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Date</span>(System.currentTimeMillis() + EXPIRE_TIME);</span><br><span class="line">            <span class="type">Algorithm</span> <span class="variable">algorithm</span> <span class="operator">=</span> Algorithm.HMAC256(SECRET);</span><br><span class="line">            <span class="keyword">return</span> JWT.create()</span><br><span class="line">                    <span class="comment">// 将 user id 保存到 token 里面</span></span><br><span class="line">                    .withAudience(userName)</span><br><span class="line">                    <span class="comment">// 50分钟后token过期</span></span><br><span class="line">                    .withExpiresAt(date)</span><br><span class="line">                    <span class="comment">//.withClaim()</span></span><br><span class="line">                    <span class="comment">//.withSubject(userName)</span></span><br><span class="line">                    <span class="comment">// token 的密钥</span></span><br><span class="line">                    .sign(algorithm);</span><br><span class="line">        &#125;<span class="keyword">catch</span>(Exception ex)&#123;</span><br><span class="line">            ex.printStackTrace();</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Exception</span>(<span class="string">&quot;签名错误&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据token获取username</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> token</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">getUserId</span><span class="params">(String token)</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">userId</span> <span class="operator">=</span> JWT.decode(token).getAudience().get(<span class="number">0</span>);</span><br><span class="line">            <span class="keyword">return</span> userId;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (JWTDecodeException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">JWTDecodeException</span>(<span class="string">&quot;生成的token 异常&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 校验token 是否有效</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> token</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">boolean</span> <span class="title function_">checkSign</span><span class="params">(String token)</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="type">Algorithm</span> <span class="variable">algorithm</span> <span class="operator">=</span> Algorithm.HMAC256(SECRET);</span><br><span class="line">            <span class="type">JWTVerifier</span> <span class="variable">verifier</span> <span class="operator">=</span> JWT.require(algorithm)</span><br><span class="line">                    <span class="comment">// .withClaim(&quot;username&quot;, username)</span></span><br><span class="line">                    .build();</span><br><span class="line">            <span class="type">DecodedJWT</span> <span class="variable">jwt</span> <span class="operator">=</span> verifier.verify(token);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (JWTVerificationException exception) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;token 无效，请重新获取&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="comment">//测试生成Token串</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">strToken</span> <span class="operator">=</span> JwtTokenUtil.createSign(<span class="string">&quot;zhangsan&quot;</span>);</span><br><span class="line">        System.out.println(strToken);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJ6aGFuZ3NhbiIsImV4cCI6MTY1NzA5MzQ3MX0.OdoENj363dPW2YVQfrc4SigoYlt45ydEtkgIc4xzzRo</span></span><br><span class="line">        <span class="comment">//验证 token是否有效</span></span><br><span class="line">        <span class="type">boolean</span> <span class="variable">isValid</span> <span class="operator">=</span> JwtTokenUtil.checkSign(<span class="string">&quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJ6aGFuZ3NhbiIsImV4cCI6MTY1NzA5MzQ3MX0.OdoENj363dPW2YVQfrc4SigoYlt45ydEtkgIc4xzzRo&quot;</span>);</span><br><span class="line">        System.out.println(isValid);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//从给定的token串获取用户信息</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">username</span> <span class="operator">=</span> JwtTokenUtil.getUserId(<span class="string">&quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJ6aGFuZ3NhbiIsImV4cCI6MTY1NzA5MzQ3MX0.OdoENj363dPW2YVQfrc4SigoYlt45ydEtkgIc4xzzRo&quot;</span>);</span><br><span class="line">        System.out.println(username);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-3-SpringSecurity整合JWT-返回JWT-token"><a href="#2-3-SpringSecurity整合JWT-返回JWT-token" class="headerlink" title="2-3 SpringSecurity整合JWT-返回JWT token"></a>2-3 SpringSecurity整合JWT-返回JWT token</h2><img src="https://woniumd.oss-cn-hangzhou.aliyuncs.com/java/gaopeng2/20220706154522.png" alt="image-20220706154521948" style="zoom:67%;" />
-
-
-
-<p><strong>第1步,登录认证成功，生成token并返回</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">**</span><br><span class="line"> * 自定义认证成功的处理器Handler</span><br><span class="line"> */</span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyAuthenticationSuccessHandler</span> <span class="keyword">implements</span> <span class="title class_">AuthenticationSuccessHandler</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onAuthenticationSuccess</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Authentication authentication)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//获取当前登录认证成功的用户名</span></span><br><span class="line">            <span class="type">String</span> <span class="variable">username</span> <span class="operator">=</span> request.getParameter(<span class="string">&quot;username&quot;</span>);</span><br><span class="line">            <span class="type">String</span> <span class="variable">strToken</span> <span class="operator">=</span> JwtTokenUtil.createSign(username);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//通过响应的json返回客户端</span></span><br><span class="line">            ResponseResult&lt;String&gt; result = <span class="keyword">new</span> <span class="title class_">ResponseResult</span>&lt;&gt;(strToken,<span class="string">&quot;OK&quot;</span>,<span class="number">200</span>);</span><br><span class="line">            response.setContentType(<span class="string">&quot;application/json;charset=utf-8&quot;</span>);</span><br><span class="line">            <span class="type">PrintWriter</span> <span class="variable">out</span> <span class="operator">=</span> response.getWriter();</span><br><span class="line">            <span class="comment">//将对象转json输出</span></span><br><span class="line">            out.write(<span class="keyword">new</span> <span class="title class_">ObjectMapper</span>().writeValueAsString(result)); </span><br><span class="line">            out.flush();</span><br><span class="line">            out.close();</span><br><span class="line">        &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>第2步，携带Token发送请求</strong></p>
-<p>要想使FilterSecurityInterceptor过滤器放行:</p>
-<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1. Spring Security 上下文（ Context ） 中要有一个 Authentication Token ，且应该是已认证状态。</span><br><span class="line">2. Authentication Token 中所包含的 User 的权限信息要满足访问当前 URI 的权限要求。</span><br></pre></td></tr></table></figure>
-
-<p>实现思路:</p>
+<figure class="highlight xml"><figcaption data-lang="XML"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">&lt;!-- 用于生成 JWT 依赖 --></span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span></pre></td></tr><tr><td data-num="3"></td><td><pre>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>io.jsonwebtoken<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span></pre></td></tr><tr><td data-num="4"></td><td><pre>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>jjwt<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span></pre></td></tr><tr><td data-num="5"></td><td><pre>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>0.9.1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span></pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span></pre></td></tr><tr><td data-num="7"></td><td><pre></pre></td></tr><tr><td data-num="8"></td><td><pre><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span></pre></td></tr><tr><td data-num="9"></td><td><pre>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.auth0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span></pre></td></tr><tr><td data-num="10"></td><td><pre>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>java-jwt<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span></pre></td></tr><tr><td data-num="11"></td><td><pre>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>3.8.1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span></pre></td></tr><tr><td data-num="12"></td><td><pre><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span></pre></td></tr></table></figure><ul>
+<li>编写工具类 JwtTokenUtil 并测试</li>
+</ul>
+<figure class="highlight java"><figcaption data-lang="java"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">JwtTokenUtil</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>    <span class="token comment">/**</pre></td></tr><tr><td data-num="3"></td><td><pre>     * 过期时间 50 分钟</pre></td></tr><tr><td data-num="4"></td><td><pre>     */</span></pre></td></tr><tr><td data-num="5"></td><td><pre>    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">long</span> <span class="token constant">EXPIRE_TIME</span> <span class="token operator">=</span> <span class="token number">5</span> <span class="token operator">*</span> <span class="token number">60</span> <span class="token operator">*</span> <span class="token number">10000</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="6"></td><td><pre>    <span class="token comment">/**</pre></td></tr><tr><td data-num="7"></td><td><pre>     * jwt 密钥</pre></td></tr><tr><td data-num="8"></td><td><pre>     */</span></pre></td></tr><tr><td data-num="9"></td><td><pre>    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">SECRET</span> <span class="token operator">=</span> <span class="token string">"woniuxy"</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="10"></td><td><pre></pre></td></tr><tr><td data-num="11"></td><td><pre>    <span class="token comment">/*</pre></td></tr><tr><td data-num="12"></td><td><pre>       生成签名  50 分钟过期</pre></td></tr><tr><td data-num="13"></td><td><pre>     */</span></pre></td></tr><tr><td data-num="14"></td><td><pre>    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">String</span> <span class="token function">createSign</span><span class="token punctuation">(</span><span class="token class-name">String</span> userName<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="15"></td><td><pre>        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="16"></td><td><pre>            <span class="token class-name">Date</span> date <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token constant">EXPIRE_TIME</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="17"></td><td><pre>            <span class="token class-name">Algorithm</span> algorithm <span class="token operator">=</span> <span class="token class-name">Algorithm</span><span class="token punctuation">.</span><span class="token function">HMAC256</span><span class="token punctuation">(</span><span class="token constant">SECRET</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="18"></td><td><pre>            <span class="token keyword">return</span> <span class="token constant">JWT</span><span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="19"></td><td><pre>                    <span class="token comment">// 将 user id 保存到 token 里面</span></pre></td></tr><tr><td data-num="20"></td><td><pre>                    <span class="token punctuation">.</span><span class="token function">withAudience</span><span class="token punctuation">(</span>userName<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="21"></td><td><pre>                    <span class="token comment">// 50 分钟后 token 过期</span></pre></td></tr><tr><td data-num="22"></td><td><pre>                    <span class="token punctuation">.</span><span class="token function">withExpiresAt</span><span class="token punctuation">(</span>date<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="23"></td><td><pre>                    <span class="token comment">//.withClaim()</span></pre></td></tr><tr><td data-num="24"></td><td><pre>                    <span class="token comment">//.withSubject(userName)</span></pre></td></tr><tr><td data-num="25"></td><td><pre>                    <span class="token comment">//token 的密钥</span></pre></td></tr><tr><td data-num="26"></td><td><pre>                    <span class="token punctuation">.</span><span class="token function">sign</span><span class="token punctuation">(</span>algorithm<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="27"></td><td><pre>        <span class="token punctuation">&#125;</span><span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token class-name">Exception</span> ex<span class="token punctuation">)</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="28"></td><td><pre>            ex<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="29"></td><td><pre>            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Exception</span><span class="token punctuation">(</span><span class="token string">"签名错误"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="30"></td><td><pre>        <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="31"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="32"></td><td><pre></pre></td></tr><tr><td data-num="33"></td><td><pre>    <span class="token comment">/**</pre></td></tr><tr><td data-num="34"></td><td><pre>     * 根据 token 获取 username</pre></td></tr><tr><td data-num="35"></td><td><pre>     * @param token</pre></td></tr><tr><td data-num="36"></td><td><pre>     * @return</pre></td></tr><tr><td data-num="37"></td><td><pre>     */</span></pre></td></tr><tr><td data-num="38"></td><td><pre>    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">String</span> <span class="token function">getUserId</span><span class="token punctuation">(</span><span class="token class-name">String</span> token<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="39"></td><td><pre>        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="40"></td><td><pre>            <span class="token class-name">String</span> userId <span class="token operator">=</span> <span class="token constant">JWT</span><span class="token punctuation">.</span><span class="token function">decode</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getAudience</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="41"></td><td><pre>            <span class="token keyword">return</span> userId<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="42"></td><td><pre>        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">JWTDecodeException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="43"></td><td><pre>            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">JWTDecodeException</span><span class="token punctuation">(</span><span class="token string">"生成的token 异常"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="44"></td><td><pre>        <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="45"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="46"></td><td><pre></pre></td></tr><tr><td data-num="47"></td><td><pre>    <span class="token comment">/**</pre></td></tr><tr><td data-num="48"></td><td><pre>     * 校验 token 是否有效</pre></td></tr><tr><td data-num="49"></td><td><pre>     * @param token</pre></td></tr><tr><td data-num="50"></td><td><pre>     * @return</pre></td></tr><tr><td data-num="51"></td><td><pre>     */</span></pre></td></tr><tr><td data-num="52"></td><td><pre>    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">boolean</span> <span class="token function">checkSign</span><span class="token punctuation">(</span><span class="token class-name">String</span> token<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="53"></td><td><pre>        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="54"></td><td><pre>            <span class="token class-name">Algorithm</span> algorithm <span class="token operator">=</span> <span class="token class-name">Algorithm</span><span class="token punctuation">.</span><span class="token function">HMAC256</span><span class="token punctuation">(</span><span class="token constant">SECRET</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="55"></td><td><pre>            <span class="token class-name">JWTVerifier</span> verifier <span class="token operator">=</span> <span class="token constant">JWT</span><span class="token punctuation">.</span><span class="token function">require</span><span class="token punctuation">(</span>algorithm<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="56"></td><td><pre>                    <span class="token comment">// .withClaim("username", username)</span></pre></td></tr><tr><td data-num="57"></td><td><pre>                    <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="58"></td><td><pre>            <span class="token class-name">DecodedJWT</span> jwt <span class="token operator">=</span> verifier<span class="token punctuation">.</span><span class="token function">verify</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="59"></td><td><pre>            <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="60"></td><td><pre>        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">JWTVerificationException</span> exception<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="61"></td><td><pre>            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"token 无效，请重新获取"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="62"></td><td><pre>        <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="63"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="64"></td><td><pre></pre></td></tr><tr><td data-num="65"></td><td><pre>    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="66"></td><td><pre>        <span class="token comment">// 测试生成 Token 串</span></pre></td></tr><tr><td data-num="67"></td><td><pre>        <span class="token class-name">String</span> strToken <span class="token operator">=</span> <span class="token class-name">JwtTokenUtil</span><span class="token punctuation">.</span><span class="token function">createSign</span><span class="token punctuation">(</span><span class="token string">"zhangsan"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="68"></td><td><pre>        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>strToken<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="69"></td><td><pre></pre></td></tr><tr><td data-num="70"></td><td><pre>        <span class="token comment">//eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJ6aGFuZ3NhbiIsImV4cCI6MTY1NzA5MzQ3MX0.OdoENj363dPW2YVQfrc4SigoYlt45ydEtkgIc4xzzRo</span></pre></td></tr><tr><td data-num="71"></td><td><pre>        <span class="token comment">// 验证 token 是否有效</span></pre></td></tr><tr><td data-num="72"></td><td><pre>        <span class="token keyword">boolean</span> isValid <span class="token operator">=</span> <span class="token class-name">JwtTokenUtil</span><span class="token punctuation">.</span><span class="token function">checkSign</span><span class="token punctuation">(</span><span class="token string">"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJ6aGFuZ3NhbiIsImV4cCI6MTY1NzA5MzQ3MX0.OdoENj363dPW2YVQfrc4SigoYlt45ydEtkgIc4xzzRo"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="73"></td><td><pre>        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>isValid<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="74"></td><td><pre></pre></td></tr><tr><td data-num="75"></td><td><pre>        <span class="token comment">// 从给定的 token 串获取用户信息</span></pre></td></tr><tr><td data-num="76"></td><td><pre>        <span class="token class-name">String</span> username <span class="token operator">=</span> <span class="token class-name">JwtTokenUtil</span><span class="token punctuation">.</span><span class="token function">getUserId</span><span class="token punctuation">(</span><span class="token string">"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJ6aGFuZ3NhbiIsImV4cCI6MTY1NzA5MzQ3MX0.OdoENj363dPW2YVQfrc4SigoYlt45ydEtkgIc4xzzRo"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="77"></td><td><pre>        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>username<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="78"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="79"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><h2 id="2-3-springsecurity整合jwt-返回jwt-token"><a class="anchor" href="#2-3-springsecurity整合jwt-返回jwt-token">#</a> 2-3 SpringSecurity 整合 JWT - 返回 JWT token</h2>
+<p>&lt;img src=&quot;<span class="exturl" data-url="aHR0cHM6Ly93b25pdW1kLm9zcy1jbi1oYW5nemhvdS5hbGl5dW5jcy5jb20vamF2YS9nYW9wZW5nMi8yMDIyMDcwNjE1NDUyMi5wbmc=">https://woniumd.oss-cn-hangzhou.aliyuncs.com/java/gaopeng2/20220706154522.png</span>&quot; alt=&quot;image-20220706154521948&quot; style=&quot;zoom:67%;&quot; /&gt;</p>
+<p><strong>第 1 步，登录认证成功，生成 token 并返回</strong></p>
+<figure class="highlight java"><figcaption data-lang="java"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token operator">*</span><span class="token operator">*</span></pre></td></tr><tr><td data-num="2"></td><td><pre> <span class="token operator">*</span> 自定义认证成功的处理器<span class="token class-name">Handler</span></pre></td></tr><tr><td data-num="3"></td><td><pre> <span class="token operator">*</span><span class="token operator">/</span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token annotation punctuation">@Component</span></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyAuthenticationSuccessHandler</span> <span class="token keyword">implements</span> <span class="token class-name">AuthenticationSuccessHandler</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="6"></td><td><pre>    <span class="token annotation punctuation">@Override</span></pre></td></tr><tr><td data-num="7"></td><td><pre>    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onAuthenticationSuccess</span><span class="token punctuation">(</span><span class="token class-name">HttpServletRequest</span> request<span class="token punctuation">,</span> <span class="token class-name">HttpServletResponse</span> response<span class="token punctuation">,</span> <span class="token class-name">Authentication</span> authentication<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">IOException</span><span class="token punctuation">,</span> <span class="token class-name">ServletException</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="8"></td><td><pre>        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="9"></td><td><pre>            <span class="token comment">// 获取当前登录认证成功的用户名</span></pre></td></tr><tr><td data-num="10"></td><td><pre>            <span class="token class-name">String</span> username <span class="token operator">=</span> request<span class="token punctuation">.</span><span class="token function">getParameter</span><span class="token punctuation">(</span><span class="token string">"username"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="11"></td><td><pre>            <span class="token class-name">String</span> strToken <span class="token operator">=</span> <span class="token class-name">JwtTokenUtil</span><span class="token punctuation">.</span><span class="token function">createSign</span><span class="token punctuation">(</span>username<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="12"></td><td><pre></pre></td></tr><tr><td data-num="13"></td><td><pre>            <span class="token comment">// 通过响应的 json 返回客户端</span></pre></td></tr><tr><td data-num="14"></td><td><pre>            <span class="token class-name">ResponseResult</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> result <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ResponseResult</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span>strToken<span class="token punctuation">,</span><span class="token string">"OK"</span><span class="token punctuation">,</span><span class="token number">200</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="15"></td><td><pre>            response<span class="token punctuation">.</span><span class="token function">setContentType</span><span class="token punctuation">(</span><span class="token string">"application/json;charset=utf-8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="16"></td><td><pre>            <span class="token class-name">PrintWriter</span> out <span class="token operator">=</span> response<span class="token punctuation">.</span><span class="token function">getWriter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="17"></td><td><pre>            <span class="token comment">// 将对象转 json 输出</span></pre></td></tr><tr><td data-num="18"></td><td><pre>            out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ObjectMapper</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">writeValueAsString</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> </pre></td></tr><tr><td data-num="19"></td><td><pre>            out<span class="token punctuation">.</span><span class="token function">flush</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="20"></td><td><pre>            out<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="21"></td><td><pre>        <span class="token punctuation">&#125;</span><span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="22"></td><td><pre>            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="23"></td><td><pre>        <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="24"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="25"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p><strong>第 2 步，携带 Token 发送请求</strong></p>
+<p>要想使 FilterSecurityInterceptor 过滤器放行:</p>
+<figure class="highlight txt"><figcaption data-lang="txt"></figcaption><table><tr><td data-num="1"></td><td><pre>1. Spring Security 上下文（ Context ） 中要有一个 Authentication Token ，且应该是已认证状态。</pre></td></tr><tr><td data-num="2"></td><td><pre>2. Authentication Token 中所包含的 User 的权限信息要满足访问当前 URI 的权限要求。</pre></td></tr></table></figure><p>实现思路:</p>
 <p>关键在于：在 FilterSecurityInterceptor 之前 要有一个 Filter 将用户请求中携带的 JWT 转化为 Authentication Token 存在 Spring Security 上下文（ Context ）中给 “后面” 的 FilterSecurityInterceptor 用。</p>
 <p>基于上述思路，我们要自定义实现一个 Filter ：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *  将用户请求中携带的 JWT 转化为 Authentication Token</span></span><br><span class="line"><span class="comment"> *  存入 Spring Security 上下文（ Context ）</span></span><br><span class="line"><span class="comment"> *  表示每次请求只执行该过滤器一次</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JwtTokenAuthenticationFilter</span> <span class="keyword">extends</span> <span class="title class_">OncePerRequestFilter</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> UserMapper userMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> MyAuthenticationFailureHandler myAuthenticationFailureHandler;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">doFilterInternal</span><span class="params">(HttpServletRequest request,</span></span><br><span class="line"><span class="params">                                    HttpServletResponse response,</span></span><br><span class="line"><span class="params">                                    FilterChain filterChain)</span> <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">        <span class="comment">//获取当前请求的uri</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">uri</span> <span class="operator">=</span> request.getRequestURI();</span><br><span class="line">        <span class="comment">//如果是认证请求</span></span><br><span class="line">        <span class="keyword">if</span>(uri.endsWith(<span class="string">&quot;/login&quot;</span>))&#123;</span><br><span class="line">            <span class="comment">//放行</span></span><br><span class="line">            filterChain.doFilter(request,response);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">         <span class="comment">//不是认证请求--获取请求中的头部的token串</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">strToken</span> <span class="operator">=</span> request.getHeader(<span class="string">&quot;strToken&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span>(StringUtils.isEmpty(strToken))&#123;</span><br><span class="line">            <span class="comment">//抛出自定义异常 -Token为null</span></span><br><span class="line">            myAuthenticationFailureHandler.onAuthenticationFailure(request,response,</span><br><span class="line">                    <span class="keyword">new</span> <span class="title class_">TokenIsNullException</span>(<span class="string">&quot;Token为空!&quot;</span>));</span><br><span class="line">            <span class="keyword">return</span> ;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//不是空,且不是认证请求</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//检验token是否有效</span></span><br><span class="line">            <span class="keyword">if</span> (JwtTokenUtil.checkSign(strToken)) &#123;</span><br><span class="line">                <span class="comment">//获取token中的用户名</span></span><br><span class="line">                <span class="type">String</span> <span class="variable">username</span> <span class="operator">=</span> JwtTokenUtil.getUserId(strToken);</span><br><span class="line">                <span class="comment">//查询数据库获取用户的权限集</span></span><br><span class="line">                List&lt;String&gt; percodes = userMapper.getPerCodesByPerm(username);</span><br><span class="line">                List&lt;GrantedAuthority&gt; authorities = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">                percodes.forEach(percode-&gt;&#123;</span><br><span class="line">                    authorities.add(<span class="keyword">new</span> <span class="title class_">SimpleGrantedAuthority</span>(percode));</span><br><span class="line">                &#125;);</span><br><span class="line">                <span class="comment">//封装数据库存询的用户信息</span></span><br><span class="line">                <span class="type">UsernamePasswordAuthenticationToken</span>  <span class="variable">usernamePasswordAuthenticationToken</span></span><br><span class="line">                        <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UsernamePasswordAuthenticationToken</span>(username,<span class="string">&quot;&quot;</span>,authorities);</span><br><span class="line"></span><br><span class="line">                <span class="comment">//存入securityContext</span></span><br><span class="line">                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);</span><br><span class="line">                <span class="comment">//放行</span></span><br><span class="line">                filterChain.doFilter(request,response);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">            <span class="comment">///抛出自定义异常  Token无效</span></span><br><span class="line">            myAuthenticationFailureHandler.onAuthenticationFailure(request,response,</span><br><span class="line">                    <span class="keyword">new</span> <span class="title class_">TokenIsInvalidException</span>(<span class="string">&quot;Token无效!&quot;</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><figcaption data-lang="java"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">/**</pre></td></tr><tr><td data-num="2"></td><td><pre> *  将用户请求中携带的 JWT 转化为 Authentication Token</pre></td></tr><tr><td data-num="3"></td><td><pre> *  存入 Spring Security 上下文（ Context ）</pre></td></tr><tr><td data-num="4"></td><td><pre> *  表示每次请求只执行该过滤器一次</pre></td></tr><tr><td data-num="5"></td><td><pre> */</span></pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token annotation punctuation">@Component</span></pre></td></tr><tr><td data-num="7"></td><td><pre><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">JwtTokenAuthenticationFilter</span> <span class="token keyword">extends</span> <span class="token class-name">OncePerRequestFilter</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="8"></td><td><pre>    <span class="token annotation punctuation">@Autowired</span></pre></td></tr><tr><td data-num="9"></td><td><pre>    <span class="token keyword">private</span> <span class="token class-name">UserMapper</span> userMapper<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="10"></td><td><pre></pre></td></tr><tr><td data-num="11"></td><td><pre>    <span class="token annotation punctuation">@Autowired</span></pre></td></tr><tr><td data-num="12"></td><td><pre>    <span class="token keyword">private</span> <span class="token class-name">MyAuthenticationFailureHandler</span> myAuthenticationFailureHandler<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="13"></td><td><pre></pre></td></tr><tr><td data-num="14"></td><td><pre>    <span class="token annotation punctuation">@Override</span></pre></td></tr><tr><td data-num="15"></td><td><pre>    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">doFilterInternal</span><span class="token punctuation">(</span><span class="token class-name">HttpServletRequest</span> request<span class="token punctuation">,</span></pre></td></tr><tr><td data-num="16"></td><td><pre>                                    <span class="token class-name">HttpServletResponse</span> response<span class="token punctuation">,</span></pre></td></tr><tr><td data-num="17"></td><td><pre>                                    <span class="token class-name">FilterChain</span> filterChain<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">ServletException</span><span class="token punctuation">,</span> <span class="token class-name">IOException</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="18"></td><td><pre>        <span class="token comment">// 获取当前请求的 uri</span></pre></td></tr><tr><td data-num="19"></td><td><pre>        <span class="token class-name">String</span> uri <span class="token operator">=</span> request<span class="token punctuation">.</span><span class="token function">getRequestURI</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="20"></td><td><pre>        <span class="token comment">// 如果是认证请求</span></pre></td></tr><tr><td data-num="21"></td><td><pre>        <span class="token keyword">if</span><span class="token punctuation">(</span>uri<span class="token punctuation">.</span><span class="token function">endsWith</span><span class="token punctuation">(</span><span class="token string">"/login"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="22"></td><td><pre>            <span class="token comment">// 放行</span></pre></td></tr><tr><td data-num="23"></td><td><pre>            filterChain<span class="token punctuation">.</span><span class="token function">doFilter</span><span class="token punctuation">(</span>request<span class="token punctuation">,</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="24"></td><td><pre>            <span class="token keyword">return</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="25"></td><td><pre>        <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="26"></td><td><pre></pre></td></tr><tr><td data-num="27"></td><td><pre>         <span class="token comment">// 不是认证请求 -- 获取请求中的头部的 token 串</span></pre></td></tr><tr><td data-num="28"></td><td><pre>        <span class="token class-name">String</span> strToken <span class="token operator">=</span> request<span class="token punctuation">.</span><span class="token function">getHeader</span><span class="token punctuation">(</span><span class="token string">"strToken"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="29"></td><td><pre>        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token class-name">StringUtils</span><span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span>strToken<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="30"></td><td><pre>            <span class="token comment">// 抛出自定义异常 -Token 为 null</span></pre></td></tr><tr><td data-num="31"></td><td><pre>            myAuthenticationFailureHandler<span class="token punctuation">.</span><span class="token function">onAuthenticationFailure</span><span class="token punctuation">(</span>request<span class="token punctuation">,</span>response<span class="token punctuation">,</span></pre></td></tr><tr><td data-num="32"></td><td><pre>                    <span class="token keyword">new</span> <span class="token class-name">TokenIsNullException</span><span class="token punctuation">(</span><span class="token string">"Token为空!"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="33"></td><td><pre>            <span class="token keyword">return</span> <span class="token punctuation">;</span></pre></td></tr><tr><td data-num="34"></td><td><pre>        <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="35"></td><td><pre>        <span class="token comment">// 不是空，且不是认证请求</span></pre></td></tr><tr><td data-num="36"></td><td><pre>        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="37"></td><td><pre>            <span class="token comment">// 检验 token 是否有效</span></pre></td></tr><tr><td data-num="38"></td><td><pre>            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token class-name">JwtTokenUtil</span><span class="token punctuation">.</span><span class="token function">checkSign</span><span class="token punctuation">(</span>strToken<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="39"></td><td><pre>                <span class="token comment">// 获取 token 中的用户名</span></pre></td></tr><tr><td data-num="40"></td><td><pre>                <span class="token class-name">String</span> username <span class="token operator">=</span> <span class="token class-name">JwtTokenUtil</span><span class="token punctuation">.</span><span class="token function">getUserId</span><span class="token punctuation">(</span>strToken<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="41"></td><td><pre>                <span class="token comment">// 查询数据库获取用户的权限集</span></pre></td></tr><tr><td data-num="42"></td><td><pre>                <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> percodes <span class="token operator">=</span> userMapper<span class="token punctuation">.</span><span class="token function">getPerCodesByPerm</span><span class="token punctuation">(</span>username<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="43"></td><td><pre>                <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">GrantedAuthority</span><span class="token punctuation">></span></span> authorities <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="44"></td><td><pre>                percodes<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>percode<span class="token operator">-></span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="45"></td><td><pre>                    authorities<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">SimpleGrantedAuthority</span><span class="token punctuation">(</span>percode<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="46"></td><td><pre>                <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="47"></td><td><pre>                <span class="token comment">// 封装数据库存询的用户信息</span></pre></td></tr><tr><td data-num="48"></td><td><pre>                <span class="token class-name">UsernamePasswordAuthenticationToken</span>  usernamePasswordAuthenticationToken</pre></td></tr><tr><td data-num="49"></td><td><pre>                        <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">UsernamePasswordAuthenticationToken</span><span class="token punctuation">(</span>username<span class="token punctuation">,</span><span class="token string">""</span><span class="token punctuation">,</span>authorities<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="50"></td><td><pre></pre></td></tr><tr><td data-num="51"></td><td><pre>                <span class="token comment">// 存入 securityContext</span></pre></td></tr><tr><td data-num="52"></td><td><pre>                <span class="token class-name">SecurityContextHolder</span><span class="token punctuation">.</span><span class="token function">getContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setAuthentication</span><span class="token punctuation">(</span>usernamePasswordAuthenticationToken<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="53"></td><td><pre>                <span class="token comment">// 放行</span></pre></td></tr><tr><td data-num="54"></td><td><pre>                filterChain<span class="token punctuation">.</span><span class="token function">doFilter</span><span class="token punctuation">(</span>request<span class="token punctuation">,</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="55"></td><td><pre>            <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="56"></td><td><pre>        <span class="token punctuation">&#125;</span><span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="57"></td><td><pre>            <span class="token comment">/// 抛出自定义异常  Token 无效</span></pre></td></tr><tr><td data-num="58"></td><td><pre>            myAuthenticationFailureHandler<span class="token punctuation">.</span><span class="token function">onAuthenticationFailure</span><span class="token punctuation">(</span>request<span class="token punctuation">,</span>response<span class="token punctuation">,</span></pre></td></tr><tr><td data-num="59"></td><td><pre>                    <span class="token keyword">new</span> <span class="token class-name">TokenIsInvalidException</span><span class="token punctuation">(</span><span class="token string">"Token无效!"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="60"></td><td><pre>        <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="61"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="62"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>然后将过滤器插入到 FilterChainPrxoy 代理的过滤器链中的 UsernamePasswordAuthencationFilter 前面</p>
+<figure class="highlight java"><figcaption data-lang="java"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">// 将自定义的 JwtTokenAuthenticationFilter 插入到过滤器链中的指定的过滤器前面</span></pre></td></tr><tr><td data-num="2"></td><td><pre>             http<span class="token punctuation">.</span><span class="token function">addFilterBefore</span><span class="token punctuation">(</span>jwtTokenAuthenticationFilter<span class="token punctuation">,</span> <span class="token class-name">UsernamePasswordAuthenticationFilter</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr></table></figure><h1 id="3注销成功处理方案"><a class="anchor" href="#3注销成功处理方案">#</a> 3. 注销成功处理方案</h1>
+<p>注销成功之后返回登录的页面，逻辑是没有错的，但是在前后端分离的情况下是返回登录页面吗？显然不是，而是返回注销成功的信息</p>
+<p>于是，我们再去定制一个 LogoutSuccessHandler</p>
+<figure class="highlight java"><figcaption data-lang="java"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">// 注销成功的处理器</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token annotation punctuation">@Component</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyLogoutSuccessHandler</span> <span class="token keyword">implements</span> <span class="token class-name">LogoutSuccessHandler</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>    <span class="token annotation punctuation">@Override</span></pre></td></tr><tr><td data-num="5"></td><td><pre>    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onLogoutSuccess</span><span class="token punctuation">(</span><span class="token class-name">HttpServletRequest</span> request<span class="token punctuation">,</span> <span class="token class-name">HttpServletResponse</span> response<span class="token punctuation">,</span></pre></td></tr><tr><td data-num="6"></td><td><pre>                                <span class="token class-name">Authentication</span> authentication<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">IOException</span><span class="token punctuation">,</span> <span class="token class-name">ServletException</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="7"></td><td><pre>        <span class="token class-name">String</span> headerToken <span class="token operator">=</span> request<span class="token punctuation">.</span><span class="token function">getHeader</span><span class="token punctuation">(</span><span class="token string">"strToken"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="8"></td><td><pre>        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"logout header Token:"</span><span class="token operator">+</span>headerToken<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="9"></td><td><pre>        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token class-name">StringUtils</span><span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span>headerToken<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span> <span class="token comment">// 如果 token 不是空</span></pre></td></tr><tr><td data-num="10"></td><td><pre>            <span class="token class-name">SecurityContextHolder</span><span class="token punctuation">.</span><span class="token function">clearContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 清空上下文 用户名与权限集 UsernamePasswordAuthenticationToken</span></pre></td></tr><tr><td data-num="11"></td><td><pre>            <span class="token class-name">ResponseResult</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> result <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ResponseResult</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">,</span><span class="token string">"注销成功"</span><span class="token punctuation">,</span><span class="token number">200</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="12"></td><td><pre>            response<span class="token punctuation">.</span><span class="token function">setContentType</span><span class="token punctuation">(</span><span class="token string">"application/json;charset=UTF-8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="13"></td><td><pre>            response<span class="token punctuation">.</span><span class="token function">getWriter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ObjectMapper</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">writeValueAsString</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="14"></td><td><pre>        <span class="token punctuation">&#125;</span><span class="token keyword">else</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="15"></td><td><pre>            <span class="token class-name">ResponseResult</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Void</span><span class="token punctuation">></span></span> result <span class="token operator">=</span> <span class="token class-name">ResponseResult</span><span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token class-name">ResultCode</span><span class="token punctuation">.</span><span class="token constant">TOKEN_IS_NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="16"></td><td><pre>            response<span class="token punctuation">.</span><span class="token function">setContentType</span><span class="token punctuation">(</span><span class="token string">"application/json;charset=utf-8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="17"></td><td><pre>            <span class="token class-name">PrintWriter</span> out<span class="token operator">=</span> response<span class="token punctuation">.</span><span class="token function">getWriter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="18"></td><td><pre>            out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ObjectMapper</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">writeValueAsString</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 将对象转 json 输出</span></pre></td></tr><tr><td data-num="19"></td><td><pre>            out<span class="token punctuation">.</span><span class="token function">flush</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="20"></td><td><pre>            out<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="21"></td><td><pre>        <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="22"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="23"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>WebSecurityConfig 配置类中 配置注销成功处理器</p>
+<figure class="highlight java"><figcaption data-lang="java"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">// 前后端分离处理注销成功操作</span></pre></td></tr><tr><td data-num="2"></td><td><pre> <span class="token punctuation">.</span><span class="token function">and</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">logout</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">logoutSuccessHandler</span><span class="token punctuation">(</span>myLogoutSuccessHandler<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="3"></td><td><pre></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token comment">// 关闭 session 最严格的策略 -JWT 认证的情况下，不需要 security 会话参与</span></pre></td></tr><tr><td data-num="5"></td><td><pre> http<span class="token punctuation">.</span><span class="token function">sessionManagement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">sessionCreationPolicy</span><span class="token punctuation">(</span><span class="token class-name">SessionCreationPolicy</span><span class="token punctuation">.</span><span class="token constant">STATELESS</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr></table></figure>
+  </div>
 
-<p>然后将过滤器插入到FilterChainPrxoy代理的过滤器链中的UsernamePasswordAuthencationFilter前面</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//将自定义的JwtTokenAuthenticationFilter插入到过滤器链中的指定的过滤器前面</span></span><br><span class="line">             http.addFilterBefore(jwtTokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);</span><br></pre></td></tr></table></figure>
+   <footer>
 
-<h1 id="3-注销成功处理方案"><a href="#3-注销成功处理方案" class="headerlink" title="3.注销成功处理方案"></a>3.注销成功处理方案</h1><p>注销成功之后返回登录的页面,逻辑是没有错的,但是在前后端分离的情况下是返回登录页面吗?显然不是,而是返回注销成功的信息</p>
-<p>于是，我们再去定制一个LogoutSuccessHandler</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//注销成功的处理器</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyLogoutSuccessHandler</span> <span class="keyword">implements</span> <span class="title class_">LogoutSuccessHandler</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onLogoutSuccess</span><span class="params">(HttpServletRequest request, HttpServletResponse response,</span></span><br><span class="line"><span class="params">                                Authentication authentication)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">headerToken</span> <span class="operator">=</span> request.getHeader(<span class="string">&quot;strToken&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;logout header Token:&quot;</span>+headerToken);</span><br><span class="line">        <span class="keyword">if</span>(!StringUtils.isEmpty(headerToken))&#123; <span class="comment">//如果token不是空</span></span><br><span class="line">            SecurityContextHolder.clearContext(); <span class="comment">//清空上下文 用户名与权限集UsernamePasswordAuthenticationToken</span></span><br><span class="line">            ResponseResult&lt;String&gt; result = <span class="keyword">new</span> <span class="title class_">ResponseResult</span>&lt;&gt;(<span class="string">&quot;&quot;</span>,<span class="string">&quot;注销成功&quot;</span>,<span class="number">200</span>);</span><br><span class="line">            response.setContentType(<span class="string">&quot;application/json;charset=UTF-8&quot;</span>);</span><br><span class="line">            response.getWriter().write(<span class="keyword">new</span> <span class="title class_">ObjectMapper</span>().writeValueAsString(result));</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            ResponseResult&lt;Void&gt; result = ResponseResult.error(ResultCode.TOKEN_IS_NULL);</span><br><span class="line">            response.setContentType(<span class="string">&quot;application/json;charset=utf-8&quot;</span>);</span><br><span class="line">            PrintWriter out= response.getWriter();</span><br><span class="line">            out.write(<span class="keyword">new</span> <span class="title class_">ObjectMapper</span>().writeValueAsString(result)); <span class="comment">//将对象转json输出</span></span><br><span class="line">            out.flush();</span><br><span class="line">            out.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>WebSecurityConfig配置类中 配置注销成功处理器</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">// 前后端分离处理注销成功操作</span></span><br><span class="line"> .and().logout().logoutSuccessHandler(myLogoutSuccessHandler);</span><br><span class="line"></span><br><span class="line"><span class="comment">//关闭session最严格的策略 -JWT认证的情况下，不需要security会话参与</span></span><br><span class="line"> http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);</span><br></pre></td></tr></table></figure>
-
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">Edited on</span>
+    <time title="Modified: 2022-07-07 07:40:12" itemprop="dateModified" datetime="2022-07-07T07:40:12+08:00">2022-07-07</time>
+  </span>
+</div>
 
       
-    </div>
-    
+<div class="reward">
+  <button><i class="ic i-heartbeat"></i> Donate</button>
+  <p>Give me a cup of [coffee]~(￣▽￣)~*</p>
+  <div id="qr">
+      
+      <div>
+        <img data-src="/images/wechatpay.png" alt="Legend WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/alipay.png" alt="Legend Alipay">
+        <p>Alipay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/paypal.png" alt="Legend PayPal">
+        <p>PayPal</p>
+      </div>
   </div>
-  
-    
-    <div class="copyright">
-        <p><span>本文标题:</span><a  href="/2022/09/06/springsecurity%E9%89%B4%E6%9D%83/"></a></p>
-        <p><span>文章作者:</span><a  href="/" title="访问  的个人博客"></a></p>
-        <p><span>发布时间:</span>2022年09月06日 - 12时49分</p>
-        <p><span>最后更新:</span>2022年07月07日 - 07时40分</p>
-        <p>
-            <span>原始链接:</span><a class="post-url" href="/2022/09/06/springsecurity%E9%89%B4%E6%9D%83/" title="">http://example.com/2022/09/06/springsecurity%E9%89%B4%E6%9D%83/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/09/06/springsecurity%E9%89%B4%E6%9D%83/　　作者: " title=""></span>
-        </p>
-        <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
-        </p>
-    </div>
+</div>
 
+      
 
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>Post author:  </strong>Legend <i class="ic i-at"><em>@</em></i>Legend
+  </li>
+  <li class="link">
+    <strong>Post link: </strong>
+    <a href="http://example.com/2022/09/06/springsecurity%E9%89%B4%E6%9D%83/" title="">http://example.com/2022/09/06/springsecurity鉴权/</a>
+  </li>
+  <li class="license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
 
-<nav id="article-nav">
-  
-  
-    <a  href="/2022/09/05/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World</div>
-      <strong class="article-nav-caption">></strong>
-    </a>
-  
-</nav>
+  </footer>
 
-
-  
 </article>
 
-    <div id="toc" class="toc-article">
-    <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%99%E5%AD%A6%E7%9B%AE%E6%A0%87"><span class="toc-number">1.</span> <span class="toc-text">教学目标</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-SpringSecurity-%E9%89%B4%E6%9D%83-%E9%87%8D%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text">1.SpringSecurity 鉴权 - [重点]</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-SpringSecurity%E6%95%B4%E5%90%88JWT-%E9%87%8D%E7%82%B9"><span class="toc-number">3.</span> <span class="toc-text">2.SpringSecurity整合JWT - [重点]</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-JWT%E6%A6%82%E8%BF%B0"><span class="toc-number">3.1.</span> <span class="toc-text">2-1 JWT概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E5%AE%9E%E7%8E%B0%E7%94%9F%E6%88%90token"><span class="toc-number">3.2.</span> <span class="toc-text">2-2 实现生成token</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-SpringSecurity%E6%95%B4%E5%90%88JWT-%E8%BF%94%E5%9B%9EJWT-token"><span class="toc-number">3.3.</span> <span class="toc-text">2-3 SpringSecurity整合JWT-返回JWT token</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E6%B3%A8%E9%94%80%E6%88%90%E5%8A%9F%E5%A4%84%E7%90%86%E6%96%B9%E6%A1%88"><span class="toc-number">4.</span> <span class="toc-text">3.注销成功处理方案</span></a></li></ol>
-</div>
-<style>
-    .left-col .switch-btn {
-        display: none;
-    }
-    .left-col .switch-area {
-        display: none;
-    }
-</style>
-<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
-
-<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
-
-<script>
-    var valueHide = "隐藏目录";
-    var valueShow = "显示目录";
-    if ($(".left-col").is(":hidden")) {
-        $("#tocButton").attr("value", valueShow);
-    }
-    $("#tocButton").click(function() {
-        if ($("#toc").is(":hidden")) {
-            $("#tocButton").attr("value", valueHide);
-            $("#toc").slideDown(320);
-            $(".switch-btn, .switch-area").fadeOut(300);
-        }
-        else {
-            $("#tocButton").attr("value", valueShow);
-            $("#toc").slideUp(350);
-            $(".switch-btn, .switch-area").fadeIn(500);
-        }
-    })
-    if ($(".toc").length < 1) {
-        $("#toc, #tocButton").hide();
-        $(".switch-btn, .switch-area").show();
-    }
-</script>
-
-
-
-
-<div class="bdsharebuttonbox">
-	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
-	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
-	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
-	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
-	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
-	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
-</div>
-<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
-
-
-
-
-    
-        <section class="changyan" id="comments">
-  <!--<div id="uyan_frame"></div>-->
-  <div id="SOHUCS"></div>
-  <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
-  <script type="text/javascript">
-    window.changyan.api.config({
-      appid: 'xxxx',
-      conf: 'xxxxxxxxx'
-    });
-  </script>
-</section>
-    
-
-
-
-    <div class="scroll" id="post-nav-button">
-        
-            <a  href="/" title="回到主页"><i class="fa fa-home"></i></a>
-        
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
-        
-            <a  href="/2022/09/05/hello-world/" title="下一篇: Hello World">
-                <i class="fa fa-angle-right"></i>
-            </a>
-        
-    </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2022/09/06/springsecurity%E9%89%B4%E6%9D%83/">springsecurity鉴权</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/09/05/hello-world/">Hello World</a></li></ul>
-    
-<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
-
-    <script>
-        $(".post-list").addClass("toc-article");
-        // $(".post-list-item a").attr("target","_blank");
-        $("#post-nav-button > a:nth-child(2)").click(function() {
-            $(".fa-bars, .fa-times").toggle();
-            $(".post-list").toggle(300);
-            if ($(".toc").length > 0) {
-                $("#toc, #tocButton").toggle(200, function() {
-                    if ($(".switch-area").is(":visible")) {
-                        $("#toc, .switch-btn, .switch-area").toggle();
-                        $("#tocButton").attr("value", valueHide);
-                        }
-                    })
-            }
-            else {
-                $(".switch-btn, .switch-area").fadeToggle(300);
-            }
-        })
-    </script>
-
-
-
-
-    <script>
-        
-    </script>
-
-</div>
-      <footer id="footer">
-    <div class="outer">
-        <div id="footer-info">
-            <div class="footer-left">
-                &copy; 2022 Legend
-            </div>
-            <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank">Hexo &nbsp;&nbsp;</a><a href="https://github.com/maochunguang" target="_blank">Blog</a> by tommy
-            </div>
-        </div>
-        
-            <div class="visit">
-                
-                    <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" >极客到访数: 
-                            <span id="busuanzi_value_site_uv"></span>
-                        </span>
-                    </span>
-                
-                
-                    <span>, </span>
-                
-                
-                    <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit">本页阅读量: 
-                            <span id="busuanzi_value_page_pv"></span>
-                        </span>
-                    </span>
-                
-            </div>
-        
-    </div>
-</footer>
-
-    </div>
-    
-<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
-
-
-<script src="/js/main.js"></script>
-
-
-    <script>
-        $(document).ready(function() {
-            var backgroundnum = 3;
-            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
-            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
-            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
-        })
-    </script>
-
-
-<!-- Google Analytics -->
-<script type="text/javascript">
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'xxxxx', 'auto');
-ga('send', 'pageview');
-
-</script>
-<!-- End Google Analytics -->
-
-
-
-	<script>
-	var _hmt = _hmt || [];
-	(function() {
-	  var hm = document.createElement("script");
-	  hm.src = "//hm.baidu.com/hm.js?xxxxxx";
-	  var s = document.getElementsByTagName("script")[0]; 
-	  s.parentNode.insertBefore(hm, s);
-	})();
-	</script>
-
-
-
-<div class="scroll" id="scroll">
-    <a href="#"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
-</div>
-<script>
-    $(document).ready(function() {
-        if ($("#comments").length < 1) {
-            $("#scroll > a:nth-child(2)").hide();
-        };
-    })
-</script>
-
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
-
-  <script language="javascript">
-    $(function() {
-        $("a[title]").each(function() {
-            var a = $(this);
-            var title = a.attr('title');
-            if (title == undefined || title == "") return;
-            a.data('title', title).removeAttr('title').hover(
-            function() {
-                var offset = a.offset();
-                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
-                    top: offset.top - a.outerHeight() - 15,
-                    left: offset.left + a.outerWidth()/2 + 1
-                }).fadeIn(function() {
-                    var pop = $(this);
-                    setTimeout(function() {
-                        pop.remove();
-                    }, pop.text().length * 800);
-                });
-            }, function() {
-                $("#anchortitlecontainer").remove();
-            });
-        });
-    });
-</script>
-
-
   </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2022/09/05/hello-world/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipewkhf1zj20zk0m81kx.jpg" title="Hello World">
+  <span class="type">Previous Post</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>Hello World</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="Contents">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%99%E5%AD%A6%E7%9B%AE%E6%A0%87"><span class="toc-number">1.</span> <span class="toc-text"> 教学目标</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1springsecurity-%E9%89%B4%E6%9D%83-%E9%87%8D%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text"> 1.SpringSecurity 鉴权 - [重点]</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2springsecurity%E6%95%B4%E5%90%88jwt-%E9%87%8D%E7%82%B9"><span class="toc-number">3.</span> <span class="toc-text"> 2.SpringSecurity 整合 JWT - [重点]</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-jwt%E6%A6%82%E8%BF%B0"><span class="toc-number">3.1.</span> <span class="toc-text"> 2-1 JWT 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E5%AE%9E%E7%8E%B0%E7%94%9F%E6%88%90token"><span class="toc-number">3.2.</span> <span class="toc-text"> 2-2 实现生成 token</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-springsecurity%E6%95%B4%E5%90%88jwt-%E8%BF%94%E5%9B%9Ejwt-token"><span class="toc-number">3.3.</span> <span class="toc-text"> 2-3 SpringSecurity 整合 JWT - 返回 JWT token</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3%E6%B3%A8%E9%94%80%E6%88%90%E5%8A%9F%E5%A4%84%E7%90%86%E6%96%B9%E6%A1%88"><span class="toc-number">4.</span> <span class="toc-text"> 3. 注销成功处理方案</span></a></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="Related">
+      </div>
+      <div class="overview panel" data-title="Overview">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="Legend"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">Legend</p>
+  <div class="description" itemprop="description">思念之人所在之处,便是我的归宿</div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">2</span>
+        <span class="name">posts</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>Random Posts</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/05/hello-world/" title="Hello World">Hello World</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/06/springsecurity%E9%89%B4%E6%9D%83/" title="Untitled">Untitled</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>Recent Comments</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2022</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Legend @ Yume Shoka</span>
+  </div>
+  <div class="powered-by">
+    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2022/09/06/springsecurity鉴权/',
+    favicon: {
+      show: "（●´3｀●）Goooood",
+      hide: "(´Д｀)Booooom"
+    },
+    search : {
+      placeholder: "Search for Posts",
+      empty: "We didn't find any results for the search: ${query}",
+      stats: "${hits} results found in ${time} ms"
+    },
+    valine: true,fancybox: true,
+    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
 </body>
 </html>
