@@ -108,4 +108,93 @@
 <figure class="highlight java"><figcaption data-lang="java"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">// 注销成功的处理器</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token annotation punctuation">@Component</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyLogoutSuccessHandler</span> <span class="token keyword">implements</span> <span class="token class-name">LogoutSuccessHandler</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>    <span class="token annotation punctuation">@Override</span></pre></td></tr><tr><td data-num="5"></td><td><pre>    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onLogoutSuccess</span><span class="token punctuation">(</span><span class="token class-name">HttpServletRequest</span> request<span class="token punctuation">,</span> <span class="token class-name">HttpServletResponse</span> response<span class="token punctuation">,</span></pre></td></tr><tr><td data-num="6"></td><td><pre>                                <span class="token class-name">Authentication</span> authentication<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">IOException</span><span class="token punctuation">,</span> <span class="token class-name">ServletException</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="7"></td><td><pre>        <span class="token class-name">String</span> headerToken <span class="token operator">=</span> request<span class="token punctuation">.</span><span class="token function">getHeader</span><span class="token punctuation">(</span><span class="token string">"strToken"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="8"></td><td><pre>        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"logout header Token:"</span><span class="token operator">+</span>headerToken<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="9"></td><td><pre>        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token class-name">StringUtils</span><span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span>headerToken<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span> <span class="token comment">// 如果 token 不是空</span></pre></td></tr><tr><td data-num="10"></td><td><pre>            <span class="token class-name">SecurityContextHolder</span><span class="token punctuation">.</span><span class="token function">clearContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 清空上下文 用户名与权限集 UsernamePasswordAuthenticationToken</span></pre></td></tr><tr><td data-num="11"></td><td><pre>            <span class="token class-name">ResponseResult</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> result <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ResponseResult</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">,</span><span class="token string">"注销成功"</span><span class="token punctuation">,</span><span class="token number">200</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="12"></td><td><pre>            response<span class="token punctuation">.</span><span class="token function">setContentType</span><span class="token punctuation">(</span><span class="token string">"application/json;charset=UTF-8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="13"></td><td><pre>            response<span class="token punctuation">.</span><span class="token function">getWriter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ObjectMapper</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">writeValueAsString</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="14"></td><td><pre>        <span class="token punctuation">&#125;</span><span class="token keyword">else</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="15"></td><td><pre>            <span class="token class-name">ResponseResult</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Void</span><span class="token punctuation">></span></span> result <span class="token operator">=</span> <span class="token class-name">ResponseResult</span><span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token class-name">ResultCode</span><span class="token punctuation">.</span><span class="token constant">TOKEN_IS_NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="16"></td><td><pre>            response<span class="token punctuation">.</span><span class="token function">setContentType</span><span class="token punctuation">(</span><span class="token string">"application/json;charset=utf-8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="17"></td><td><pre>            <span class="token class-name">PrintWriter</span> out<span class="token operator">=</span> response<span class="token punctuation">.</span><span class="token function">getWriter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="18"></td><td><pre>            out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ObjectMapper</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">writeValueAsString</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 将对象转 json 输出</span></pre></td></tr><tr><td data-num="19"></td><td><pre>            out<span class="token punctuation">.</span><span class="token function">flush</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="20"></td><td><pre>            out<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="21"></td><td><pre>        <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="22"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="23"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>WebSecurityConfig 配置类中 配置注销成功处理器</p>
 <figure class="highlight java"><figcaption data-lang="java"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">// 前后端分离处理注销成功操作</span></pre></td></tr><tr><td data-num="2"></td><td><pre> <span class="token punctuation">.</span><span class="token function">and</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">logout</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">logoutSuccessHandler</span><span class="token punctuation">(</span>myLogoutSuccessHandler<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="3"></td><td><pre></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token comment">// 关闭 session 最严格的策略 -JWT 认证的情况下，不需要 security 会话参与</span></pre></td></tr><tr><td data-num="5"></td><td><pre> http<span class="token punctuation">.</span><span class="token function">sessionManagement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">sessionCreationPolicy</span><span class="token punctuation">(</span><span class="token class-name">SessionCreationPolicy</span><span class="token punctuation">.</span><span class="token constant">STATELESS</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr></table></figure>]]></content>
   </entry>
+  <entry>
+    <title>分布式系统</title>
+    <url>/2022/09/07/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/</url>
+    <content><![CDATA[<h1 id="分布式系统"><a class="anchor" href="#分布式系统">#</a> 分布式系统</h1>
+<h2 id="概论"><a class="anchor" href="#概论">#</a> 概论</h2>
+<ul>
+<li>分布式 CAP 理论</li>
+<li>分布式 BASE 理论</li>
+<li>seata 在 windows 下的安装</li>
+</ul>
+<h3 id="cap"><a class="anchor" href="#cap">#</a> CAP</h3>
+<p>CAP 理论是分布式系统、特别是分布式存储领域中被讨论的最多的理论。其中 C 代表一致性 (Consistency)，A 代表可用性 (Availability)，P 代表分区容错性 (Partition tolerance)。CAP 理论告诉我们 C、A、P 三者不能同时满足，最多只能满足其中两个。</p>
+<p>&lt;img src=&quot;C:\Users\14023\AppData\Roaming\Typora\typora-user-images\image-20220907131016759.png&quot; alt=&quot;image-20220907131016759&quot; style=&quot;zoom:50%;&quot; /&gt;</p>
+<p>1998 年，加州大学的计算机科学家 Eric Brewer 提出，分布式系统有三个指标。</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>C</strong>onsistency（一致性）</td>
+<td>all nodes see the same data at the same time</td>
+</tr>
+<tr>
+<td></td>
+<td>在更新操作成功并返回客户端完成后，所有节点在同一个时间的数据完全一致。</td>
+</tr>
+<tr>
+<td></td>
+<td>这里的一致性是指强一致性。一般关系型数据库就具有强一致性特性。</td>
+</tr>
+<tr>
+<td><strong>A</strong>vailability（可用性）</td>
+<td>Reads and writes always succeed</td>
+</tr>
+<tr>
+<td></td>
+<td>服务一直可用，而且是正常响应时间。</td>
+</tr>
+<tr>
+<td><strong>P</strong>artition tolerance （分区容错性）</td>
+<td>the system continues to operate despite arbirary message loss or failure of part of the system</td>
+</tr>
+<tr>
+<td></td>
+<td>分布式系统在遇到某节点或网络分区故障时，仍然能够对外提供满足一致性和可用性的服务。</td>
+</tr>
+</tbody>
+</table>
+<p>Eric Brewer 指出，这三个指标不可能同时做到。这个结论就叫做 CAP 定理。由于 CAP 三需求无法同时满足，因此在设计分布式系统时就必须有所取舍。</p>
+<p>由于网络并非 100% 可靠，因此分布式系统必须实现分区容错性，所以，系统架构师权衡取舍的也就只有 C（ 一致性 ）和 A（ 可用性 ），即，CP 还是 AP 。</p>
+<ul>
+<li>
+<p>如果此时要保证<strong>一致性</strong>，就必须等待网络恢复，完成数据同步后，整个集群才对外提供服务，服务处于阻塞状态，不可用。<br />
+CP ，即实现一致性和分区容错性。此组合为数据强一致性模式，即，要求在多服务之间数据一定要一致，弱化了可用性。一些对数据要求比较高的场景（ 比如金融业务 ）常使用此模式。这种模式性能较低。Seata AT 模式的 “读已提交” 级别就是这种模式。</p>
+</li>
+<li>
+<p>如果此时要保证<strong>可用性</strong>，就不能等待网络恢复，那节点之间就会出现数据不一致。<br />
+AP，即实现可用性和分区容错性。此组合为数据最终一致性，即，要求所有服务器都可用，弱化了一致性。互联网分布式服务多数基于 AP 。这种模式性能较高，可满足高并发业务需求。基于消息的最终一致性就是这种模式。</p>
+</li>
+</ul>
+<p>也就是说，在 P 一定会出现的情况下，A 和 C 之间只能实现一个。</p>
+<h4 id="cap-三选二"><a class="anchor" href="#cap-三选二">#</a> CAP 三选二</h4>
+<ul>
+<li><code>一致性 (Consistency)</code> : 一个写操作返回成功，那么之后的读请求都必须读到这个新数据；如果返回失败，那么所有读操作都不能读到这个数据。所有节点访问同一份最新的数据。</li>
+<li><code>可用性 (Availability)</code> : 对数据更新具备高可用性，请求能够及时处理，不会一直等待，即使出现节点失效。</li>
+<li><code>分区容错性 (Partition tolerance)</code> : 能容忍网络分区，在网络断开的情况下，被分隔的节点仍能正常对外提供服务。</li>
+</ul>
+<h3 id="base"><a class="anchor" href="#base">#</a> BASE</h3>
+<h4 id="什么是base"><a class="anchor" href="#什么是base">#</a> 什么是 BASE</h4>
+<p>eBay 的架构师 Dan Pritchett 源于对大规模分布式系统的实践总结，在 ACM 上发表文章提出 BASE 理论，BASE 理论是对 CAP 理论的延伸，<em><strong>核心思想</strong></em>是即使无法做到强一致性（Strong Consistency，CAP 的一致性就是强一致性），但应用可以采用适合的方式达到最终一致性（Eventual Consitency）。</p>
+<h4 id="基本思想"><a class="anchor" href="#基本思想">#</a> 基本思想</h4>
+<p>BASE 理论包含三个思想：</p>
+<ul>
+<li>
+<p><strong>B</strong>asically <strong>A</strong>vailable（基本可用）：分布式系统在出现故障时，允许损失部分可用性，即保证核心可用。</p>
+</li>
+<li>
+<p><strong>S</strong>oft State（软状态）：在一定时间内，允许出现中间状态，比如临时的不一致状态。</p>
+</li>
+<li>
+<p><strong>E</strong>ventually Consistent（最终一致性）：虽然无法保证强一致性，但是在软状态结束后，最终达到数据一致。</p>
+</li>
+</ul>
+]]></content>
+  </entry>
 </search>
