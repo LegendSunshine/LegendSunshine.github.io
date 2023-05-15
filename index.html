@@ -75,6 +75,12 @@
       </div>
       <div>
         
+        <img
+          src="/images/ayer.svg"
+          class="cover-logo"
+          alt="Legend"
+        />
+        
       </div>
     </div>
   </div>
@@ -395,7 +401,8 @@ Vue.createApp(app).mount('#app')
     </footer>
   </div>
 
-   
+    
+ 
    
   
 </article>
@@ -457,7 +464,8 @@ Vue.createApp(app).mount('#app')
     </footer>
   </div>
 
-   
+    
+ 
    
   
 </article>
@@ -639,7 +647,8 @@ Vue.createApp(app).mount('#app')
     </footer>
   </div>
 
-   
+    
+ 
    
   
 </article>
@@ -774,7 +783,8 @@ AP，即实现可用性和分区容错性。此组合为数据最终一致性，
     </footer>
   </div>
 
-   
+    
+ 
    
   
 </article>
@@ -912,7 +922,8 @@ AP，即实现可用性和分区容错性。此组合为数据最终一致性，
     </footer>
   </div>
 
-   
+    
+ 
    
   
 </article>
@@ -977,7 +988,8 @@ AP，即实现可用性和分区容错性。此组合为数据最终一致性，
     </footer>
   </div>
 
-   
+    
+ 
    
   
 </article>
@@ -995,7 +1007,7 @@ AP，即实现可用性和分区容错性。此组合为数据最终一致性，
     <ul>
       <li>
         Copyrights &copy;
-        2015-2023
+        2019-2023
         <i class="ri-heart-fill heart_icon"></i> Legend
       </li>
     </ul>
@@ -1021,12 +1033,17 @@ AP，即实现可用性和分区容错性。此组合为数据最终一致性，
     </ul>
     <ul>
       
+      <li>
+          <img src="/images/beian.png"></img>
+          <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=01234567890123" target="_black" rel="nofollow">浙公网安备01234567890123号</a>
+      </li>
+        
     </ul>
     <ul>
       <li>
         <!-- cnzz统计 -->
         
-        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        <script type="text/javascript" src=''></script>
         
       </li>
     </ul>
@@ -1255,6 +1272,30 @@ AP，即实现可用性和分区容错性。此组合为数据最终一致性，
     viewer_init()
 </script> 
 <!-- MathJax -->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+  });
+
+  MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/mathjax/2.7.7/MathJax.js"></script>
+<script src="https://cdn.staticfile.org/mathjax/2.7.7/config/TeX-AMS-MML_HTMLorMML-full.js"></script>
+<script>
+  var ayerConfig = {
+    mathjax: true,
+  };
+</script>
 
 <!-- Katex -->
 
