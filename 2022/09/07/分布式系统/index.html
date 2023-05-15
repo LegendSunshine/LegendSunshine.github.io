@@ -25,11 +25,12 @@
 
   
 
-<link rel="canonical" href="http://example.com/search/">
+<link rel="canonical" href="http://example.com/2022/09/07/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">
 
 
 
-  <title>search |
+  <title>
+分布式系统 - java |
 小帅猪的奇思妙想 = Legend</title>
 <meta name="generator" content="Hexo 6.2.0"></head>
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -57,8 +58,19 @@
         <div id="brand">
           <div class="pjax">
           
-  <h1 itemprop="name headline">search
+  <h1 itemprop="name headline">分布式系统
   </h1>
+  
+<div class="meta">
+  <span class="item" title="Created: 2022-09-07 20:11:26">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">Posted on</span>
+    <time itemprop="dateCreated datePublished" datetime="2022-09-07T20:11:26+08:00">2022-09-07</time>
+  </span>
+</div>
+
 
           </div>
         </div>
@@ -88,12 +100,12 @@
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giph4fomxoj20zk0m8axp.jpg"></li>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giclgi503lj20zk0m8hdt.jpg"></li>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giclfw2t96j20zk0m8x6p.jpg"></li>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipeyhsblkj20zk0m81kx.jpg"></li>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giclh0m9pdj20zk0m8hdt.jpg"></li>
-          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipeudstjqj20zk0m8k3r.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giciundwu5j20zk0m8n9e.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipevgoki5j20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giclflwv2aj20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipet4bz0yj20zk0m8e81.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipexbei4hj20zk0m8npd.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipeyvx1d4j20zk0m8hdt.jpg"></li>
         </ul>
       </div>
     </header>
@@ -114,9 +126,17 @@
       <div class="inner">
         <div id="main" class="pjax">
           
-  <div class="page wrap">
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">Home</a></span><i class="ic i-angle-right"></i>
+<span  class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/java/" itemprop="item" rel="index" title="In java"><span itemprop="name">java</span></a>
+<meta itemprop="position" content="1" /></span>
+</div>
+
     <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
-  <link itemprop="mainEntityOfPage" href="http://example.com/search/index.html">
+  <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/07/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">
 
   <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="image" content="//cdn.jsdelivr.net/gh/LegendSunshine/LegendSunshine.github.io@latest/images/avatar.jpg">
@@ -131,7 +151,91 @@
   <div class="body md" itemprop="articleBody">
     
 
-    
+    <figure class="highlight yaml"><figcaption data-lang="YAML"><span>l</span></figcaption><table><tr><td data-num="1"></td><td><pre>&lt;<span class="token tag">!--swig</span>￼0<span class="token punctuation">-</span><span class="token punctuation">-</span><span class="token punctuation">></span></pre></td></tr></table></figure><h1 id="分布式系统"><a class="anchor" href="#分布式系统">#</a> 分布式系统</h1>
+<h2 id="概论"><a class="anchor" href="#概论">#</a> 概论</h2>
+<ul>
+<li>分布式 CAP 理论</li>
+<li>分布式 BASE 理论</li>
+<li>seata 在 windows 下的安装</li>
+</ul>
+<h3 id="cap"><a class="anchor" href="#cap">#</a> CAP</h3>
+<p>CAP 理论是分布式系统、特别是分布式存储领域中被讨论的最多的理论。其中 C 代表一致性 (Consistency)，A 代表可用性 (Availability)，P 代表分区容错性 (Partition tolerance)。CAP 理论告诉我们 C、A、P 三者不能同时满足，最多只能满足其中两个。</p>
+<p>&lt;img src=&quot;C:\Users\14023\AppData\Roaming\Typora\typora-user-images\image-20220907131016759.png&quot; alt=&quot;image-20220907131016759&quot; style=&quot;zoom:50%;&quot; /&gt;</p>
+<p>1998 年，加州大学的计算机科学家 Eric Brewer 提出，分布式系统有三个指标。</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>C</strong>onsistency（一致性）</td>
+<td>all nodes see the same data at the same time</td>
+</tr>
+<tr>
+<td></td>
+<td>在更新操作成功并返回客户端完成后，所有节点在同一个时间的数据完全一致。</td>
+</tr>
+<tr>
+<td></td>
+<td>这里的一致性是指强一致性。一般关系型数据库就具有强一致性特性。</td>
+</tr>
+<tr>
+<td><strong>A</strong>vailability（可用性）</td>
+<td>Reads and writes always succeed</td>
+</tr>
+<tr>
+<td></td>
+<td>服务一直可用，而且是正常响应时间。</td>
+</tr>
+<tr>
+<td><strong>P</strong>artition tolerance （分区容错性）</td>
+<td>the system continues to operate despite arbirary message loss or failure of part of the system</td>
+</tr>
+<tr>
+<td></td>
+<td>分布式系统在遇到某节点或网络分区故障时，仍然能够对外提供满足一致性和可用性的服务。</td>
+</tr>
+</tbody>
+</table>
+<p>Eric Brewer 指出，这三个指标不可能同时做到。这个结论就叫做 CAP 定理。由于 CAP 三需求无法同时满足，因此在设计分布式系统时就必须有所取舍。</p>
+<p>由于网络并非 100% 可靠，因此分布式系统必须实现分区容错性，所以，系统架构师权衡取舍的也就只有 C（ 一致性 ）和 A（ 可用性 ），即，CP 还是 AP 。</p>
+<ul>
+<li>
+<p>如果此时要保证<strong>一致性</strong>，就必须等待网络恢复，完成数据同步后，整个集群才对外提供服务，服务处于阻塞状态，不可用。<br />
+CP ，即实现一致性和分区容错性。此组合为数据强一致性模式，即，要求在多服务之间数据一定要一致，弱化了可用性。一些对数据要求比较高的场景（ 比如金融业务 ）常使用此模式。这种模式性能较低。Seata AT 模式的 “读已提交” 级别就是这种模式。</p>
+</li>
+<li>
+<p>如果此时要保证<strong>可用性</strong>，就不能等待网络恢复，那节点之间就会出现数据不一致。<br />
+AP，即实现可用性和分区容错性。此组合为数据最终一致性，即，要求所有服务器都可用，弱化了一致性。互联网分布式服务多数基于 AP 。这种模式性能较高，可满足高并发业务需求。基于消息的最终一致性就是这种模式。</p>
+</li>
+</ul>
+<p>也就是说，在 P 一定会出现的情况下，A 和 C 之间只能实现一个。</p>
+<h4 id="cap-三选二"><a class="anchor" href="#cap-三选二">#</a> CAP 三选二</h4>
+<ul>
+<li><code>一致性 (Consistency)</code> : 一个写操作返回成功，那么之后的读请求都必须读到这个新数据；如果返回失败，那么所有读操作都不能读到这个数据。所有节点访问同一份最新的数据。</li>
+<li><code>可用性 (Availability)</code> : 对数据更新具备高可用性，请求能够及时处理，不会一直等待，即使出现节点失效。</li>
+<li><code>分区容错性 (Partition tolerance)</code> : 能容忍网络分区，在网络断开的情况下，被分隔的节点仍能正常对外提供服务。</li>
+</ul>
+<h3 id="base"><a class="anchor" href="#base">#</a> BASE</h3>
+<h4 id="什么是base"><a class="anchor" href="#什么是base">#</a> 什么是 BASE</h4>
+<p>eBay 的架构师 Dan Pritchett 源于对大规模分布式系统的实践总结，在 ACM 上发表文章提出 BASE 理论，BASE 理论是对 CAP 理论的延伸，<em><strong>核心思想</strong></em>是即使无法做到强一致性（Strong Consistency，CAP 的一致性就是强一致性），但应用可以采用适合的方式达到最终一致性（Eventual Consitency）。</p>
+<h4 id="基本思想"><a class="anchor" href="#基本思想">#</a> 基本思想</h4>
+<p>BASE 理论包含三个思想：</p>
+<ul>
+<li>
+<p><strong>B</strong>asically <strong>A</strong>vailable（基本可用）：分布式系统在出现故障时，允许损失部分可用性，即保证核心可用。</p>
+</li>
+<li>
+<p><strong>S</strong>oft State（软状态）：在一定时间内，允许出现中间状态，比如临时的不一致状态。</p>
+</li>
+<li>
+<p><strong>E</strong>ventually Consistent（最终一致性）：虽然无法保证强一致性，但是在软状态结束后，最终达到数据一致。</p>
+</li>
+</ul>
+
   </div>
 
    <footer>
@@ -142,7 +246,7 @@
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2022-09-05 19:44:13" itemprop="dateModified" datetime="2022-09-05T19:44:13+08:00">2022-09-05</time>
+    <time title="Modified: 2023-02-17 14:15:23" itemprop="dateModified" datetime="2023-02-17T14:15:23+08:00">2023-02-17</time>
   </span>
 </div>
 
@@ -178,7 +282,7 @@
   </li>
   <li class="link">
     <strong>Post link: </strong>
-    <a href="http://example.com/search/index.html" title="search">http://example.com/search/index.html</a>
+    <a href="http://example.com/2022/09/07/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/" title="分布式系统">http://example.com/2022/09/07/分布式系统/</a>
   </li>
   <li class="license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
@@ -192,6 +296,31 @@
 
   </div>
   
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2022/09/06/springsecurity/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva4.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipevo9j1jj20zk0m8e81.jpg" title="安全框架">
+  <span class="type">Previous Post</span>
+  <span class="category"><i class="ic i-flag"></i> java</span>
+  <h3>安全框架</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2022/09/16/Redis/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva4.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipexe4oykj20zk0m87ji.jpg" title="Redis">
+  <span class="type">Next Post</span>
+  <span class="category"><i class="ic i-flag"></i> java</span>
+  <h3>Redis</h3>
+  </a>
+
+    </div>
+</div>
+
+  
   <div class="wrap" id="comments"></div>
 
 
@@ -204,8 +333,12 @@
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="Contents">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.</span> <span class="toc-text"> 分布式系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%AE%BA"><span class="toc-number">1.1.</span> <span class="toc-text"> 概论</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#cap"><span class="toc-number">1.1.1.</span> <span class="toc-text"> CAP</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#cap-%E4%B8%89%E9%80%89%E4%BA%8C"><span class="toc-number">1.1.1.1.</span> <span class="toc-text"> CAP 三选二</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#base"><span class="toc-number">1.1.2.</span> <span class="toc-text"> BASE</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFbase"><span class="toc-number">1.1.2.1.</span> <span class="toc-text"> 什么是 BASE</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-number">1.1.2.2.</span> <span class="toc-text"> 基本思想</span></a></li></ol></li></ol></li></ol></li></ol>
       </div>
       <div class="related panel pjax" data-title="Related">
+        <ul>
+          <li><a href="/2022/09/06/springsecurity/" rel="bookmark" title="安全框架">安全框架</a></li><li class="active"><a href="/2022/09/07/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/" rel="bookmark" title="分布式系统">分布式系统</a></li><li><a href="/2022/09/16/Redis/" rel="bookmark" title="Redis">Redis</a></li>
+        </ul>
       </div>
       <div class="overview panel" data-title="Overview">
         <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -289,10 +422,12 @@
 
   <ul id="quick">
     <li class="prev pjax">
+        <a href="/2022/09/06/springsecurity/" rel="prev" title="Previous Post"><i class="ic i-chevron-left"></i></a>
     </li>
     <li class="up"><i class="ic i-arrow-up"></i></li>
     <li class="down"><i class="ic i-arrow-down"></i></li>
     <li class="next pjax">
+        <a href="/2022/09/16/Redis/" rel="next" title="Next Post"><i class="ic i-chevron-right"></i></a>
     </li>
     <li class="percent"></li>
   </ul>
@@ -317,6 +452,16 @@
 <a href="/categories/java/" title="In java">java</a>
 </div>
 
+    <span><a href="/2022/09/06/springsecurity/" title="安全框架">安全框架</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/java/" title="In java">java</a>
+</div>
+
     <span><a href="/2022/09/16/Redis/" title="Redis">Redis</a></span>
   </li>
 
@@ -327,16 +472,6 @@
 </div>
 
     <span><a href="/2022/09/05/hello-world/" title="Hello World">Hello World</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/java/" title="In java">java</a>
-</div>
-
-    <span><a href="/2022/09/06/springsecurity/" title="安全框架">安全框架</a></span>
   </li>
 
       
@@ -401,7 +536,7 @@
   </div>
 <script data-config type="text/javascript">
   var LOCAL = {
-    path: 'search/',
+    path: '2022/09/07/分布式系统/',
     favicon: {
       show: "（●´3｀●）Goooood",
       hide: "(´Д｀)Booooom"
