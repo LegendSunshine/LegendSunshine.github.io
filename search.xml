@@ -1,145 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Redis</title>
-    <url>/2022/09/16/Redis/</url>
-    <content><![CDATA[<h1 id="redis"><a class="anchor" href="#redis">#</a> Redis</h1>
-<ul>
-<li>
-<p>redis 数据模型</p>
-</li>
-<li>
-<p>redis 整合 springboot</p>
-</li>
-<li>
-<p>redis 的常用命令</p>
-</li>
-<li>
-<p>redis 的相关类型操作</p>
-</li>
-</ul>
-<h2 id="1redis简介"><a class="anchor" href="#1redis简介">#</a> 1.redis 简介</h2>
-<h4 id="1数据模型"><a class="anchor" href="#1数据模型">#</a> 1. 数据模型</h4>
-<p>Redis 数据模型不仅仅与关系数据库管理系统（RDBMS）不同，也不同于任何简单的 NoSQL 键 - 值数据存储系统。</p>
-<p>Redis 数据类型类似于编程语言的基础数据类型，因此开发人员感觉很自然，每个数据类型都支持适『用于其类型的操作』，以最大限度发挥每种数据类型的特性。</p>
-<p>受支持的数据类型包括：</p>
-<ul>
-<li>string（ 字符串 ）</li>
-<li>hash（ 哈希 ）</li>
-<li>list（ 列表 ）</li>
-<li>set（ 集合 ）</li>
-<li>zset（ sorted set：有序集合 ）</li>
-</ul>
-<h4 id="2优势"><a class="anchor" href="#2优势">#</a> 2. 优势</h4>
-<p>Redis 的优势包括它的速度、对富数据类型的支持、操作的原子性，以及通用性：</p>
-<ul>
-<li>性能极高，它每秒可执行约 10k 个 SET 以及约 100k 个 GET 操作；</li>
-<li>丰富的数据类型，Redis 对大多数开发人员已知的多数数据类型提供了原生支持，这使得各种问题得以轻松解决；</li>
-<li>原子性，因为所有 Redis 操作都是原子性的，所以多个客户端会并发地访问一个 Redis 服务器器，获取相同的更新值；</li>
-<li>丰富的特性，Redis 是一个多效用工具，有非常多的应用场景，包括缓存、消息队列（ Redis 原生支持发布 / 订阅 ）、短期应用程序数据据（ 比如 Web 会话 ）等</li>
-</ul>
-<h4 id="3通用命令简介"><a class="anchor" href="#3通用命令简介">#</a> 3. 通用命令简介</h4>
-<p>Redis 的常用的基础命令有：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">命令</th>
-<th style="text-align:left">说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">ping</td>
-<td style="text-align:left">PING 命令来测试客户端与 Redis 的连接是否正常。 连接正常时会收到回复 PONG</td>
-</tr>
-<tr>
-<td style="text-align:left">set / get</td>
-<td style="text-align:left">使用 set 和 get 可以向 redis 设置数据、获取数据。</td>
-</tr>
-<tr>
-<td style="text-align:left">del</td>
-<td style="text-align:left">删除指定 key 的内容。</td>
-</tr>
-<tr>
-<td style="text-align:left">Keys *</td>
-<td style="text-align:left">查看当前库中所有的 key 值</td>
-</tr>
-</tbody>
-</table>
-<p>一个 Redis 实例可以包括多个数据库。不过，一个 redis 实例最多可提供 16 个数据库，而且固定了以下标从 0 到 15 作为数据库名。客户端默认连接第 0 号数据库。</p>
-<h2 id="2在spring中使用redis"><a class="anchor" href="#2在spring中使用redis">#</a> 2. 在 spring 中使用 redis</h2>
-<h4 id="step1依赖的准备"><a class="anchor" href="#step1依赖的准备">#</a> step1: 依赖的准备</h4>
-<p>Spring Boot 提供了对 Redis 集成的组件包：<strong>spring-boot-starter-data-redis</strong>，它依赖于 <strong>spring-data-redis</strong> 和 <strong>lettuce</strong> 。</p>
-<p>Spring Data Redis 的底层驱动有 2 种选择， 1.x 时代用的是 Jedis ，2.x 时代换成了 Lettuce 。</p>
-<h6 id="方式一jedis"><a class="anchor" href="#方式一jedis">#</a> 方式一：Jedis</h6>
-<pre><code class="language-pom">&lt;dependency&gt;
-  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-  &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;
-  &lt;exclusions&gt; &lt;!-- 从依赖关系中排除 --&gt;
-    &lt;exclusion&gt;
-      &lt;groupId&gt;io.lettuce&lt;/groupId&gt;
-      &lt;artifactId&gt;lettuce-core&lt;/artifactId&gt;
-    &lt;/exclusion&gt;
-  &lt;/exclusions&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-  &lt;groupId&gt;redis.clients&lt;/groupId&gt;
-  &lt;artifactId&gt;jedis&lt;/artifactId&gt;
-&lt;/dependency&gt;
-</code></pre>
-<h6 id="方式二-lettuce"><a class="anchor" href="#方式二-lettuce">#</a> 方式二: lettuce</h6>
-<pre><code class="language-pom">&lt;dependency&gt;
-  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-  &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;
-&lt;/dependency&gt;
-            &lt;!-- lettuce 依赖于 commons-pool2 。但是不知道为什么，
-                 它又不在 lettuce 的依赖关系中。所以要手动引入。--&gt;
-&lt;dependency&gt;
-  &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;
-  &lt;artifactId&gt;commons-pool2&lt;/artifactId&gt;
-&lt;/dependency&gt;
-</code></pre>
-<h4 id="step2application配置"><a class="anchor" href="#step2application配置">#</a> Step2:application 配置</h4>
-<figure class="highlight properties"><figcaption data-lang=".properties"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token key attr-name">spring.redis.host</span><span class="token punctuation">=</span><span class="token value attr-value">localhost # 默认值就是 localhost</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token key attr-name">spring.redis.port</span><span class="token punctuation">=</span><span class="token value attr-value">6379      # 默认值就是 6379</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token key attr-name">spring.redis.database</span><span class="token punctuation">=</span><span class="token value attr-value">0     # 默认值就是 0</span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token key attr-name">spring.redis.password</span><span class="token punctuation">=</span>      <span class="token value attr-value"># 默认值就是空</span></pre></td></tr></table></figure><figure class="highlight yml"><figcaption data-lang="YAML"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token key atrule">spring</span><span class="token punctuation">:</span></pre></td></tr><tr><td data-num="2"></td><td><pre>  		<span class="token key atrule">redis</span><span class="token punctuation">:</span></pre></td></tr><tr><td data-num="3"></td><td><pre>        	<span class="token key atrule">database</span><span class="token punctuation">:</span> <span class="token number">1</span>   <span class="token comment">#连接几号数据库</span></pre></td></tr><tr><td data-num="4"></td><td><pre>        	<span class="token key atrule">host</span><span class="token punctuation">:</span> 127.0.0.1</pre></td></tr><tr><td data-num="5"></td><td><pre>        	<span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">6379</span></pre></td></tr></table></figure><h2 id="3-spring-data-redis"><a class="anchor" href="#3-spring-data-redis">#</a> 3、Spring Data Redis</h2>
-<p>Spring Data Redis 针对 api 进行了重新归类与封装，将同一类型的操作封装为 <strong>Operation</strong> 接口：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">专有操作</th>
-<th style="text-align:left">说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">ValueOperations</td>
-<td style="text-align:left">string 类型的数据操作</td>
-</tr>
-<tr>
-<td style="text-align:left">HashOperations</td>
-<td style="text-align:left">map 类型的数据操作</td>
-</tr>
-<tr>
-<td style="text-align:left">ListOperations</td>
-<td style="text-align:left">list 类型的数据操作</td>
-</tr>
-<tr>
-<td style="text-align:left">SetOperations</td>
-<td style="text-align:left">set 类型数据操作</td>
-</tr>
-<tr>
-<td style="text-align:left">ZSetOperations</td>
-<td style="text-align:left">zset 类型数据操作</td>
-</tr>
-</tbody>
-</table>
-<h4 id="redis的相关类型操作"><a class="anchor" href="#redis的相关类型操作">#</a> redis 的相关类型操作</h4>
-<h5 id="string"><a class="anchor" href="#string">#</a> String</h5>
-]]></content>
-      <categories>
-        <category>java</category>
-      </categories>
-  </entry>
-  <entry>
     <title>Vue基础</title>
     <url>/2023/02/11/Vue%20%E5%9F%BA%E7%A1%80/</url>
     <content><![CDATA[<h1 id="vue基础"><a class="anchor" href="#vue基础">#</a> Vue 基础</h1>
@@ -323,6 +184,145 @@ Vue.createApp(app).mount('#app')
 ]]></content>
       <categories>
         <category>vue</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Redis</title>
+    <url>/2022/09/16/Redis/</url>
+    <content><![CDATA[<h1 id="redis"><a class="anchor" href="#redis">#</a> Redis</h1>
+<ul>
+<li>
+<p>redis 数据模型</p>
+</li>
+<li>
+<p>redis 整合 springboot</p>
+</li>
+<li>
+<p>redis 的常用命令</p>
+</li>
+<li>
+<p>redis 的相关类型操作</p>
+</li>
+</ul>
+<h2 id="1redis简介"><a class="anchor" href="#1redis简介">#</a> 1.redis 简介</h2>
+<h4 id="1数据模型"><a class="anchor" href="#1数据模型">#</a> 1. 数据模型</h4>
+<p>Redis 数据模型不仅仅与关系数据库管理系统（RDBMS）不同，也不同于任何简单的 NoSQL 键 - 值数据存储系统。</p>
+<p>Redis 数据类型类似于编程语言的基础数据类型，因此开发人员感觉很自然，每个数据类型都支持适『用于其类型的操作』，以最大限度发挥每种数据类型的特性。</p>
+<p>受支持的数据类型包括：</p>
+<ul>
+<li>string（ 字符串 ）</li>
+<li>hash（ 哈希 ）</li>
+<li>list（ 列表 ）</li>
+<li>set（ 集合 ）</li>
+<li>zset（ sorted set：有序集合 ）</li>
+</ul>
+<h4 id="2优势"><a class="anchor" href="#2优势">#</a> 2. 优势</h4>
+<p>Redis 的优势包括它的速度、对富数据类型的支持、操作的原子性，以及通用性：</p>
+<ul>
+<li>性能极高，它每秒可执行约 10k 个 SET 以及约 100k 个 GET 操作；</li>
+<li>丰富的数据类型，Redis 对大多数开发人员已知的多数数据类型提供了原生支持，这使得各种问题得以轻松解决；</li>
+<li>原子性，因为所有 Redis 操作都是原子性的，所以多个客户端会并发地访问一个 Redis 服务器器，获取相同的更新值；</li>
+<li>丰富的特性，Redis 是一个多效用工具，有非常多的应用场景，包括缓存、消息队列（ Redis 原生支持发布 / 订阅 ）、短期应用程序数据据（ 比如 Web 会话 ）等</li>
+</ul>
+<h4 id="3通用命令简介"><a class="anchor" href="#3通用命令简介">#</a> 3. 通用命令简介</h4>
+<p>Redis 的常用的基础命令有：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">ping</td>
+<td style="text-align:left">PING 命令来测试客户端与 Redis 的连接是否正常。 连接正常时会收到回复 PONG</td>
+</tr>
+<tr>
+<td style="text-align:left">set / get</td>
+<td style="text-align:left">使用 set 和 get 可以向 redis 设置数据、获取数据。</td>
+</tr>
+<tr>
+<td style="text-align:left">del</td>
+<td style="text-align:left">删除指定 key 的内容。</td>
+</tr>
+<tr>
+<td style="text-align:left">Keys *</td>
+<td style="text-align:left">查看当前库中所有的 key 值</td>
+</tr>
+</tbody>
+</table>
+<p>一个 Redis 实例可以包括多个数据库。不过，一个 redis 实例最多可提供 16 个数据库，而且固定了以下标从 0 到 15 作为数据库名。客户端默认连接第 0 号数据库。</p>
+<h2 id="2在spring中使用redis"><a class="anchor" href="#2在spring中使用redis">#</a> 2. 在 spring 中使用 redis</h2>
+<h4 id="step1依赖的准备"><a class="anchor" href="#step1依赖的准备">#</a> step1: 依赖的准备</h4>
+<p>Spring Boot 提供了对 Redis 集成的组件包：<strong>spring-boot-starter-data-redis</strong>，它依赖于 <strong>spring-data-redis</strong> 和 <strong>lettuce</strong> 。</p>
+<p>Spring Data Redis 的底层驱动有 2 种选择， 1.x 时代用的是 Jedis ，2.x 时代换成了 Lettuce 。</p>
+<h6 id="方式一jedis"><a class="anchor" href="#方式一jedis">#</a> 方式一：Jedis</h6>
+<pre><code class="language-pom">&lt;dependency&gt;
+  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;
+  &lt;exclusions&gt; &lt;!-- 从依赖关系中排除 --&gt;
+    &lt;exclusion&gt;
+      &lt;groupId&gt;io.lettuce&lt;/groupId&gt;
+      &lt;artifactId&gt;lettuce-core&lt;/artifactId&gt;
+    &lt;/exclusion&gt;
+  &lt;/exclusions&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+  &lt;groupId&gt;redis.clients&lt;/groupId&gt;
+  &lt;artifactId&gt;jedis&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h6 id="方式二-lettuce"><a class="anchor" href="#方式二-lettuce">#</a> 方式二: lettuce</h6>
+<pre><code class="language-pom">&lt;dependency&gt;
+  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;
+&lt;/dependency&gt;
+            &lt;!-- lettuce 依赖于 commons-pool2 。但是不知道为什么，
+                 它又不在 lettuce 的依赖关系中。所以要手动引入。--&gt;
+&lt;dependency&gt;
+  &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;
+  &lt;artifactId&gt;commons-pool2&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h4 id="step2application配置"><a class="anchor" href="#step2application配置">#</a> Step2:application 配置</h4>
+<figure class="highlight properties"><figcaption data-lang=".properties"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token key attr-name">spring.redis.host</span><span class="token punctuation">=</span><span class="token value attr-value">localhost # 默认值就是 localhost</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token key attr-name">spring.redis.port</span><span class="token punctuation">=</span><span class="token value attr-value">6379      # 默认值就是 6379</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token key attr-name">spring.redis.database</span><span class="token punctuation">=</span><span class="token value attr-value">0     # 默认值就是 0</span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token key attr-name">spring.redis.password</span><span class="token punctuation">=</span>      <span class="token value attr-value"># 默认值就是空</span></pre></td></tr></table></figure><figure class="highlight yml"><figcaption data-lang="YAML"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token key atrule">spring</span><span class="token punctuation">:</span></pre></td></tr><tr><td data-num="2"></td><td><pre>  		<span class="token key atrule">redis</span><span class="token punctuation">:</span></pre></td></tr><tr><td data-num="3"></td><td><pre>        	<span class="token key atrule">database</span><span class="token punctuation">:</span> <span class="token number">1</span>   <span class="token comment">#连接几号数据库</span></pre></td></tr><tr><td data-num="4"></td><td><pre>        	<span class="token key atrule">host</span><span class="token punctuation">:</span> 127.0.0.1</pre></td></tr><tr><td data-num="5"></td><td><pre>        	<span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">6379</span></pre></td></tr></table></figure><h2 id="3-spring-data-redis"><a class="anchor" href="#3-spring-data-redis">#</a> 3、Spring Data Redis</h2>
+<p>Spring Data Redis 针对 api 进行了重新归类与封装，将同一类型的操作封装为 <strong>Operation</strong> 接口：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">专有操作</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">ValueOperations</td>
+<td style="text-align:left">string 类型的数据操作</td>
+</tr>
+<tr>
+<td style="text-align:left">HashOperations</td>
+<td style="text-align:left">map 类型的数据操作</td>
+</tr>
+<tr>
+<td style="text-align:left">ListOperations</td>
+<td style="text-align:left">list 类型的数据操作</td>
+</tr>
+<tr>
+<td style="text-align:left">SetOperations</td>
+<td style="text-align:left">set 类型数据操作</td>
+</tr>
+<tr>
+<td style="text-align:left">ZSetOperations</td>
+<td style="text-align:left">zset 类型数据操作</td>
+</tr>
+</tbody>
+</table>
+<h4 id="redis的相关类型操作"><a class="anchor" href="#redis的相关类型操作">#</a> redis 的相关类型操作</h4>
+<h5 id="string"><a class="anchor" href="#string">#</a> String</h5>
+]]></content>
+      <categories>
+        <category>java</category>
       </categories>
   </entry>
   <entry>
